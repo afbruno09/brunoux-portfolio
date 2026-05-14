@@ -1,0 +1,577 @@
+---
+export interface ProjectSection {
+  id: string;
+  title: string;
+  eyebrow?: string;
+  content?: string[];
+  bullets?: string[];
+  image?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
+}
+
+export interface ProjectData {
+  title: string;
+  client: string;
+  year: string;
+  role: string;
+  duration?: string;
+  platform?: string;
+  summary: string;
+  heroImage?: string;
+  heroAlt?: string;
+  challenge: string[];
+  solution: string[];
+  impact: string[];
+  metadata?: {
+    label: string;
+    value: string;
+  }[];
+  sections?: ProjectSection[];
+  nextProject?: {
+    title: string;
+    href: string;
+  };
+}
+
+const { project } = Astro.props as { project: ProjectData };
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{project.title} • Bruno Amorim</title>
+    <meta name="description" content={project.summary} />
+  </head>
+  <body>
+    <main class="project-page">
+      <section class="project-hero">
+      <section class="project-hero">
+  <div class="container">
+    <p class="eyebrow">Case Study</p>
+
+    <h1>{project.title}</h1>
+
+    {project.heroImage && (
+      <figure class="hero-media">
+       <button
+  class="image-trigger"
+  type="button"
+  data-lightbox-src={project.heroImage}
+  data-lightbox-alt={project.heroAlt || project.title}
+  aria-label="Open image"
+>
+  <img src={project.heroImage} alt={project.heroAlt || project.title} />
+</button>
+      </figure>
+    )}
+
+    <p class="lead">{project.summary}</p>
+
+    <div class="meta-grid">
+      <div>
+        <span>Client</span>
+        <strong>{project.client}</strong>
+      </div>
+      <div>
+        <span>Year</span>
+        <strong>{project.year}</strong>
+      </div>
+      <div>
+        <span>Role</span>
+        <strong>{project.role}</strong>
+      </div>
+      {project.duration && (
+        <div>
+          <span>Duration</span>
+          <strong>{project.duration}</strong>
+        </div>
+      )}
+      {project.platform && (
+        <div>
+          <span>Platform</span>
+          <strong>{project.platform}</strong>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+      <section class="project-overview">
+        <div class="container two-columns">
+          <article class="content-block">
+            <p class="section-label">O desafio</p>
+            <h2>Contexto e problema</h2>
+            {project.challenge.map((item) => <p>{item}</p>)}
+          </article>
+
+          <article class="content-block">
+            <p class="section-label">A solução</p>
+            <h2>Abordagem de design</h2>
+            {project.solution.map((item) => <p>{item}</p>)}
+          </article>
+        </div>
+      </section>
+
+      {project.metadata && project.metadata.length > 0 && (
+        <section class="project-facts">
+          <div class="container">
+            <div class="facts-grid">
+              {project.metadata.map((item) => (
+                <div class="fact-card">
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {project.sections &&
+        project.sections.map((section) => (
+          <section class="project-section" id={section.id}>
+            <div class="container section-layout">
+              <div class="section-copy">
+                {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                <h2>{section.title}</h2>
+
+                {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul>
+                    {section.bullets.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {section.image && (
+                <figure class="section-media">
+                  <button
+  class="image-trigger"
+  type="button"
+  data-lightbox-src={section.image.src}
+  data-lightbox-alt={section.image.alt}
+  aria-label="Open image"
+>
+  <img src={section.image.src} alt={section.image.alt} />
+</button>
+                  {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
+                </figure>
+              )}
+            </div>
+          </section>
+        ))}
+
+      <section class="project-impact">
+        <div class="container">
+          <p class="section-label">Resultado</p>
+          <h2>Impacto e aprendizados</h2>
+          <div class="impact-list">
+            {project.impact.map((item) => (
+              <div class="impact-card">
+                <p>{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="project-cta">
+        <div class="container cta-box">
+          <div>
+            <p class="section-label">Próximo projeto</p>
+            <h2>Continue explorando o portfólio</h2>
+          </div>
+
+          {project.nextProject ? (
+            <a href={project.nextProject.href} class="button-link">
+              Ver {project.nextProject.title}
+            </a>
+          ) : (
+            <a href="/" class="button-link">Voltar para Home</a>
+          )}
+        </div>
+      </section>
+
+      <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+  <button class="lightbox-backdrop" type="button" aria-label="Close image"></button>
+
+  <div class="lightbox-content" role="dialog" aria-modal="true" aria-label="Expanded project image">
+    <button class="lightbox-close" type="button" aria-label="Close image">
+      ×
+    </button>
+    <img id="lightbox-image" src="" alt="" />
+  </div>
+</div>
+
+
+    </main>
+  </body>
+</html>
+
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --surface: #fffdf9;
+    --text: #181818;
+    --muted: #666156;
+    --line: rgba(24, 24, 24, 0.08);
+    --accent: #181818;
+    --radius: 20px;
+    --container: 1120px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  .container {
+    width: min(100% - 32px, var(--container));
+    margin: 0 auto;
+  }
+
+  .project-page {
+    padding: 32px 0 80px;
+  }
+
+  .project-hero,
+  .project-overview,
+  .project-facts,
+  .project-section,
+  .project-impact,
+  .project-cta {
+    margin-top: 28px;
+  }
+
+  .project-hero .container,
+  .project-overview .container,
+  .project-facts .container,
+  .project-section .container,
+  .project-impact .container,
+  .project-cta .container {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .eyebrow,
+  .section-label,
+  .meta-grid span,
+  .fact-card span,
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  h1,
+  h2,
+  p {
+    margin-top: 0;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .lead {
+    max-width: 780px;
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .meta-grid,
+  .facts-grid,
+  .impact-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-bottom: 24px;
+  }
+
+  .meta-grid div,
+  .fact-card,
+  .impact-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .meta-grid strong,
+  .fact-card strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.98rem;
+  }
+
+  .hero-media {
+  margin: 24px 0;
+}
+
+.section-media {
+  margin: 0;
+}
+
+  .two-columns,
+  .section-layout {
+    display: grid;
+    gap: 24px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li + li,
+  p + p {
+    margin-top: 10px;
+  }
+
+  .cta-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .button-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    .project-page {
+      padding-top: 48px;
+    }
+
+    .project-hero .container,
+    .project-overview .container,
+    .project-facts .container,
+    .project-section .container,
+    .project-impact .container,
+    .project-cta .container {
+      padding: 40px;
+    }
+
+    .two-columns {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .section-layout {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: start;
+    }
+
+    .facts-grid,
+    .impact-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .meta-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cta-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .image-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.image-trigger img {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.image-trigger:hover img {
+  transform: scale(1.01);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.image-lightbox[aria-hidden="false"] {
+  display: flex;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 10, 10, 0.78);
+  cursor: zoom-out;
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1200px);
+  max-height: calc(100vh - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-content img {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  border-radius: 20px;
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #181818;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .image-lightbox {
+    padding: 16px;
+  }
+
+  .lightbox-content img {
+    border-radius: 14px;
+    max-height: calc(100vh - 32px);
+  }
+
+  .lightbox-close {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+</style>
+
+<script is:inline>
+  const lightbox = document.querySelector("#image-lightbox");
+  const lightboxImage = document.querySelector("#lightbox-image");
+  const triggers = document.querySelectorAll("[data-lightbox-src]");
+  const closeButtons = document.querySelectorAll(
+    ".lightbox-close, .lightbox-backdrop"
+  );
+
+  function openLightbox(src, alt) {
+    if (!lightbox || !lightboxImage) return;
+
+    lightboxImage.src = src;
+    lightboxImage.alt = alt || "";
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lightbox-open");
+  }
+
+  function closeLightbox() {
+    if (!lightbox || !lightboxImage) return;
+
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImage.src = "";
+    lightboxImage.alt = "";
+    document.body.classList.remove("lightbox-open");
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const src = trigger.getAttribute("data-lightbox-src");
+      const alt = trigger.getAttribute("data-lightbox-alt");
+
+      if (src) {
+        openLightbox(src, alt);
+      }
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", closeLightbox);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+  });
+</script>

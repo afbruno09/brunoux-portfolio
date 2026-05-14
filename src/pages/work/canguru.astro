@@ -1,0 +1,133 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Canguru Pregnancy App",
+  client: "Canguru",
+  year: "2018",
+  role: "UX/UI Designer",
+  duration: "MVP design",
+  platform: "Mobile app",
+  summary:
+    "A mobile pregnancy app designed to support expecting mothers with clear guidance, useful information, and a more accessible way to follow their pregnancy journey.",
+
+  heroImage: "/images/canguru/cover.jpg",
+  heroAlt: "Canguru pregnancy app case study cover",
+
+  challenge: [
+    "Pregnancy involves many questions, emotional changes, and practical decisions. The challenge was to create a mobile experience that could organize relevant information without overwhelming users.",
+    "The product needed to feel trustworthy, simple, and supportive while helping expecting mothers access guidance at the right moment.",
+  ],
+
+  solution: [
+    "I designed a mobile-first experience focused on clarity, reassurance, and quick access to important pregnancy-related content.",
+    "The interface was structured around key moments of the pregnancy journey, helping users follow progress, discover relevant information, and navigate the app with less friction.",
+  ],
+
+  impact: [
+    "Created a clearer mobile experience for pregnancy tracking and guidance.",
+    "Helped organize sensitive health-related content into a more approachable interface.",
+    "Established a visual and structural foundation for the app’s MVP.",
+  ],
+
+  metadata: [
+    { label: "Scope", value: "UX/UI Design" },
+    { label: "Context", value: "Health and pregnancy" },
+    { label: "Users", value: "Expecting mothers" },
+    { label: "Output", value: "Mobile app prototype" },
+  ],
+
+  sections: [
+    {
+      id: "overview",
+      eyebrow: "Overview",
+      title: "A supportive mobile experience for pregnancy guidance",
+      content: [
+        "Canguru was designed as a mobile app to help expecting mothers access information and follow important moments during pregnancy.",
+        "The experience focused on making content easier to understand, reducing uncertainty, and creating a more welcoming digital environment for users.",
+      ],
+      image: {
+        src: "/images/canguru/overview.jpg",
+        alt: "Overview of the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "problem",
+      eyebrow: "Problem",
+      title: "Making sensitive information easier to access",
+      content: [
+        "Pregnancy-related information can easily become fragmented, technical, or emotionally overwhelming.",
+        "The product needed to present guidance in a way that felt clear, calm, and useful, while respecting the sensitivity of the user’s context.",
+      ],
+      image: {
+        src: "/images/canguru/problem.jpg",
+        alt: "Problem framing for the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "user-flow",
+      eyebrow: "User flow",
+      title: "Structuring the journey around key moments",
+      content: [
+        "The app experience was organized around the main needs of expecting mothers: understanding pregnancy progress, accessing relevant content, and finding guidance when needed.",
+        "This helped define a simpler navigation model and a more focused mobile journey.",
+      ],
+      image: {
+        src: "/images/canguru/user-flow.jpg",
+        alt: "User flow of the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "mobile",
+      eyebrow: "Mobile experience",
+      title: "Clear screens for everyday use",
+      content: [
+        "The mobile interface prioritized legibility, simple actions, and a soft visual structure.",
+        "Each screen was designed to help users quickly understand where they are, what information matters, and what they can do next.",
+      ],
+      image: {
+        src: "/images/canguru/mobile.jpg",
+        alt: "Mobile screens of the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "design-system",
+      eyebrow: "Design direction",
+      title: "A visual language built around care and clarity",
+      content: [
+        "The interface direction used a friendly tone, soft hierarchy, and accessible components to support a calm user experience.",
+        "The design needed to feel human and approachable without sacrificing usability or structure.",
+      ],
+      image: {
+        src: "/images/canguru/design-system.jpg",
+        alt: "Design direction and visual system of the Canguru app",
+      },
+    },
+
+    {
+      id: "final",
+      eyebrow: "Outcome",
+      title: "A clearer foundation for a pregnancy support product",
+      content: [
+        "The final prototype helped translate the product idea into a usable mobile experience.",
+        "It created a foundation for future validation, content expansion, and product evolution around pregnancy support.",
+      ],
+      image: {
+        src: "/images/canguru/final.jpg",
+        alt: "Final presentation of the Canguru pregnancy app case study",
+      },
+    },
+  ],
+
+  nextProject: {
+    title: "DUX",
+    href: "/work/dux",
+  },
+};
+---
+
+<ProjectCase project={project} />

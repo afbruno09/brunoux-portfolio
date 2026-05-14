@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { timelineItems } from "../data/timeline";
+---
+
+<BaseLayout
+  title="About — Bruno Amorim"
+  description="Learn more about Bruno Amorim, a Product Designer with experience across startups, consultancies and digital products."
+>
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <h1>About</h1>
+          <p>
+            Product Designer with 9+ years of experience across startups and
+            consultancies, working across fintech, e-commerce, healthcare and
+            Web3.
+          </p>
+        </div>
+
+        <div class="about-page-content">
+          <div class="about-block">
+            <h2>Profile</h2>
+            <p>
+              I work across the full design lifecycle, from research and
+              information architecture to UI design, prototyping and front-end
+              implementation. My focus is on creating digital products and
+              experiences that are clear, useful and aligned with real business
+              needs.
+            </p>
+          </div>
+
+          <div class="about-block">
+            <h2>Skills</h2>
+            <ul class="about-list">
+              <li>UX/UI Design</li>
+              <li>Interaction Design</li>
+              <li>Information Architecture</li>
+              <li>Wireframing & Prototyping</li>
+              <li>Design Systems</li>
+              <li>User Research</li>
+              <li>Usability Testing</li>
+              <li>HTML/CSS</li>
+            </ul>
+          </div>
+
+          <div class="about-block">
+            <h2>Timeline</h2>
+            <div class="timeline-list">
+              {timelineItems.map((item) => (
+                <article class="timeline-item">
+                  <p class="timeline-period">{item.period}</p>
+                  <h3 class="timeline-company">{item.company}</h3>
+                  <p class="timeline-role">{item.role}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

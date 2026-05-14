@@ -1,0 +1,486 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { navigationLinks } from "../data/navigation";
+import { projects } from "../data/projects";
+import { timelineItems } from "../data/timeline";
+
+
+const featuredProjects = projects.filter((project) => project.featured);
+const moreProjects = projects.filter((project) => !project.featured);
+
+const visibleTimelineItems = timelineItems.filter((item) => item.visibleOnHome);
+const hiddenTimelineItems = timelineItems.filter((item) => !item.visibleOnHome);
+---
+
+<BaseLayout
+  title="Bruno Amorim — Product Designer"
+  description="Product Designer with 9+ years of experience across startups and consultancies, working across fintech, e-commerce, healthcare and Web3."
+>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo">Bruno Amorim</a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <span class="menu-toggle-line"></span>
+        <span class="menu-toggle-line"></span>
+      </button>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <ul>
+          {navigationLinks.map((link) => (
+            <li>
+              {link.label === "Resume" ? (
+                <button
+                  type="button"
+                  class="nav-link-button"
+                  data-open-resume
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <a href={link.href}>{link.label}</a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <div class="container">
+        <div class="mobile-nav-panel">
+          <ul>
+            {navigationLinks.map((link) => (
+              <li>
+                {link.label === "Resume" ? (
+                  <button
+                    type="button"
+                    class="nav-link-button"
+                    data-open-resume
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <a href={link.href}>{link.label}</a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <div class="hero-media hero-media-mobile">
+            <dotlottie-player
+              src="/animations/home-animation.lottie"
+              background="transparent"
+              speed="1"
+              loop
+              autoplay
+            ></dotlottie-player>
+          </div>
+
+          <h1>Product Designer</h1>
+
+          <p class="hero-description">
+            I design digital products, interfaces and systems with a strong focus
+            on usability, clarity and real business needs.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">View Projects</a>
+
+            <button
+              type="button"
+              class="button button-secondary"
+              data-open-resume
+            >
+              Download Resume
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-media hero-media-desktop">
+          <dotlottie-player
+            src="/animations/home-animation.lottie"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+          ></dotlottie-player>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Selected Work</h2>
+          <p>
+            A selection of projects across product design, UX/UI and digital
+            experiences.
+          </p>
+        </div>
+
+        <div class="projects-group">
+          <div class="subsection-heading">
+            <h3>Featured Projects</h3>
+          </div>
+
+          <div class="projects-grid">
+            {featuredProjects.map((project) => (
+              <article class="project-card project-card-featured">
+                <a href="#" class="project-card-link">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="project-card-image"
+                    loading="lazy"
+                  />
+
+                  <div class="project-card-content">
+                    <h4>{project.title}</h4>
+                    <p class="project-category">{project.category}</p>
+                    <span class="project-cta">
+                      View Case <span aria-hidden="true">→</span>
+                    </span>
+                  </div>
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="projects-group projects-group-hidden">
+          <div id="more-projects" hidden>
+            <div class="subsection-heading">
+              <h3>More Projects</h3>
+            </div>
+
+            <div class="projects-grid">
+              {moreProjects.map((project) => (
+                <article class="project-card">
+                  <a href={`/projects/${project.slug}`} class="project-card-link">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      class="project-card-image"
+                      loading="lazy"
+                    />
+
+                    <div class="project-card-content">
+                      <h4>{project.title}</h4>
+                      <p class="project-category">{project.category}</p>
+                      <span class="project-cta">
+                        View Case <span aria-hidden="true">→</span>
+                      </span>
+                    </div>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <button
+            id="projects-toggle"
+            class="button button-secondary projects-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="more-projects"
+          >
+            View all projects
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-preview section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>About</h2>
+        </div>
+
+        <div class="about-preview-content">
+          <p>
+            Product Designer with 9+ years of experience across startups and
+            consultancies, working across fintech, e-commerce, healthcare and
+            Web3. I work from research and information architecture to UI
+            design, prototyping and front-end implementation.
+          </p>
+
+          <a class="text-link" href="/about">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline section">
+  <div class="container">
+    <div class="section-heading">
+      <h2>Timeline</h2>
+      <p>
+        A quick look at my journey through startups, consulting and digital
+        product design.
+      </p>
+    </div>
+
+    <div class="timeline-list">
+      {visibleTimelineItems.map((item) => (
+        <article class="timeline-item">
+          <p class="timeline-period">{item.period}</p>
+          <h3 class="timeline-company">{item.company}</h3>
+          <p class="timeline-role">{item.role}</p>
+        </article>
+      ))}
+
+      <div id="timeline-extra" class="timeline-extra" hidden>
+        {hiddenTimelineItems.map((item) => (
+          <article class="timeline-item">
+            <p class="timeline-period">{item.period}</p>
+            <h3 class="timeline-company">{item.company}</h3>
+            <p class="timeline-role">{item.role}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <button
+      id="timeline-toggle"
+      class="button button-secondary timeline-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="timeline-extra"
+    >
+      See more
+    </button>
+  </div>
+</section>
+
+    <section class="contact-cta section">
+      <div class="container">
+        <div class="contact-cta-content">
+          <h2>Let’s work together.</h2>
+          <p>
+            Available for product design, UX/UI and digital experiences.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="/contact">Contact Me</a>
+
+            <button
+              type="button"
+              class="button button-secondary"
+              data-open-resume
+            >
+              Download Resume
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-name">Bruno Amorim</p>
+        <p class="footer-role">Product Designer</p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <ul class="footer-links">
+          <li><a href="mailto:contact@brunoux.com">Email</a></li>
+          <li>
+            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </li>
+          <!-- <li>
+            <button
+              type="button"
+              class="button button-secondary"
+              data-open-resume
+            >
+              Download Resume
+            </button>
+          </li> --> 
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+
+  <div
+    id="resume-modal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="resume-modal-title"
+  >
+    <button
+      type="button"
+      class="modal-overlay"
+      aria-label="Close resume modal"
+      data-close-resume
+    ></button>
+
+    <div class="modal-dialog">
+      <button
+        type="button"
+        class="modal-close"
+        aria-label="Close resume modal"
+        data-close-resume
+      >
+        ×
+      </button>
+
+      <div class="resume-page-card">
+        <div class="resume-page-content">
+          <h2 id="resume-modal-title">Bruno Amorim — Resume</h2>
+          <p>
+            Use the options below to download the file or view it directly in your browser.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="/files/bruno-amorim-resume.pdf"
+              download
+            >
+              Download Resume
+            </a>
+
+            <a
+              class="button button-secondary"
+              href="/files/bruno-amorim-resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+  const projectsToggle = document.querySelector("#projects-toggle");
+  const moreProjects = document.querySelector("#more-projects");
+
+  if (projectsToggle && moreProjects) {
+    projectsToggle.addEventListener("click", () => {
+      const isExpanded = projectsToggle.getAttribute("aria-expanded") === "true";
+      projectsToggle.setAttribute("aria-expanded", String(!isExpanded));
+      moreProjects.hidden = isExpanded;
+      projectsToggle.textContent = isExpanded
+        ? "View all projects"
+        : "Hide projects";
+    });
+  }
+
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mobileMenu = document.querySelector("#mobile-menu");
+  const mobileMenuLinks = document.querySelectorAll("#mobile-menu a");
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", () => {
+      const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+      menuToggle.setAttribute(
+        "aria-label",
+        isExpanded ? "Open menu" : "Close menu"
+      );
+      mobileMenu.hidden = isExpanded;
+    });
+
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+        mobileMenu.hidden = true;
+      });
+    });
+
+    const openResumeButtonsInMenu = document.querySelectorAll(
+      ".mobile-nav [data-open-resume]"
+    );
+
+    openResumeButtonsInMenu.forEach((button) => {
+      button.addEventListener("click", () => {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open menu");
+        mobileMenu.hidden = true;
+      });
+    });
+  }
+
+  const resumeModal = document.querySelector("#resume-modal");
+  const openResumeButtons = document.querySelectorAll("[data-open-resume]");
+  const closeResumeButtons = document.querySelectorAll("[data-close-resume]");
+
+  function openResumeModal() {
+    if (!resumeModal) return;
+    resumeModal.hidden = false;
+    resumeModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    document.documentElement.classList.add("modal-open");
+  }
+
+  function closeResumeModal() {
+    if (!resumeModal) return;
+    resumeModal.hidden = true;
+    resumeModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    document.documentElement.classList.remove("modal-open");
+  }
+
+  openResumeButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openResumeModal();
+    });
+  });
+
+  closeResumeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      closeResumeModal();
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeResumeModal();
+    }
+  });
+
+  const timelineToggle = document.querySelector("#timeline-toggle");
+  const timelineExtra = document.querySelector("#timeline-extra");
+
+  if (timelineToggle && timelineExtra) {
+    timelineToggle.addEventListener("click", () => {
+      const isExpanded = timelineToggle.getAttribute("aria-expanded") === "true";
+      timelineToggle.setAttribute("aria-expanded", String(!isExpanded));
+      timelineExtra.hidden = isExpanded;
+      timelineToggle.textContent = isExpanded ? "See more" : "See less";
+    });
+  }
+</script>
+</BaseLayout>
