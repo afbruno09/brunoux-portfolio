@@ -1,5 +1,9 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
+
+<BaseLayout title="About | Bruno Amorim">
+  <section class="about-page">
 
 <section class="about-page">
   <!-- HERO -->
@@ -204,7 +208,6 @@
   .about-hero {
     position: relative;
     min-height: 100vh;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -242,7 +245,6 @@
     max-width: 860px;
     color: #fff;
     text-align: center;
-    margin-top: 0;
   }
 
   .eyebrow {
@@ -438,32 +440,31 @@
 
   /* MOBILE */
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 900px) {
     .about-hero {
-      min-height: 50svh;
-      height: 50svh;
-      max-height: 50svh;
-      padding: 64px 20px 28px;
+  min-height: 50vh;
+  height: 50vh;
+  padding: 72px 20px 32px;
+  box-sizing: border-box;
+  
     }
 
     .about-hero-content {
       max-width: 340px;
-      margin: 0 auto;
-      text-align: center;
     }
 
     .about-hero-content h1 {
       max-width: 330px;
-      font-size: clamp(1.65rem, 7.6vw, 2.4rem);
+      font-size: clamp(1rem, 5vw, 1.6rem);
       line-height: 1;
       letter-spacing: -0.045em;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .about-hero-content p {
       max-width: 310px;
-      font-size: 0.82rem;
-      line-height: 1.42;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     .eyebrow {
@@ -497,9 +498,6 @@
 
   @media screen and (min-width: 768px) {
     .about-hero {
-      min-height: 100vh;
-      height: 100vh;
-      max-height: none;
       padding: 140px 48px 72px;
     }
 
@@ -569,3 +567,4 @@
     }
   }
 </style>
+</BaseLayout>
