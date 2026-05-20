@@ -9,14 +9,25 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <!-- HERO -->
   <section class="about-hero">
     <video
-      class="about-hero-video"
-      autoplay
-      muted
-      loop
-      playsinline
-    >
-      <source src="/videos/about-hero.mp4" type="video/mp4" />
-    </video>
+  class="about-hero-video"
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="metadata"
+  
+>
+  <source
+    src="/videos/about-hero-mobile.mp4"
+    type="video/mp4"
+    media="(max-width: 767px)"
+  />
+  <source
+    src="/videos/about-hero-desktop.mp4"
+    type="video/mp4"
+    media="(min-width: 768px)"
+  />
+</video>
 
     <div class="about-hero-overlay"></div>
 
@@ -156,6 +167,62 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
+ <!-- EDUCATION -->
+<section class="about-section">
+  <div class="section-label">
+    <span>04</span>
+    <p>Education</p>
+  </div>
+
+  <div class="section-content">
+    <h2>
+      A background that connects art, design, technology and product strategy.
+    </h2>
+
+    <div class="education-list">
+      <article class="education-item">
+        <span>Degree</span>
+        <h3>Bachelor’s Degree in Arts and Design</h3>
+        <p>Federal University of Juiz de Fora — UFJF</p>
+      </article>
+
+      <article class="education-item">
+        <span>Master’s Degree</span>
+        <h3>Master’s student in Intelligence Technologies and Digital Design</h3>
+        <p>Pontifical Catholic University of São Paulo — PUC-SP</p>
+      </article>
+
+      <article class="education-item">
+        <span>Specialization</span>
+        <h3>UX Design</h3>
+        <p>TERA</p>
+      </article>
+
+      <article class="education-item">
+        <span>Specialization</span>
+        <h3>Digital Product Leadership</h3>
+        <p>TERA</p>
+      </article>
+
+      <article class="education-item">
+        <span>Specialization</span>
+        <h3>Service Design</h3>
+        <p>Professional certification</p>
+      </article>
+
+      <article class="education-item">
+        <span>Language Certification</span>
+        <h3>English Proficiency — C2</h3>
+        <p>Certified professional English proficiency</p>
+      </article>
+    </div>
+
+    <a href="#certificates" class="certificates-link">
+      View certificates
+    </a>
+  </div>
+</section>
+
   <!-- BEYOND DESIGN -->
   <section class="about-section about-beyond">
     <div class="section-label">
@@ -192,7 +259,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <div class="about-cta-actions">
       <a href="/contact" class="primary-button">Get in touch</a>
-      <a href="/" class="secondary-button">View selected work</a>
+      <a href="/" class="secondary-button">Home</a>
     </div>
   </section>
 </section>
@@ -380,6 +447,74 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .experience-item p {
     margin: 0;
   }
+
+/* EDUCATION */
+
+.education-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.education-item {
+  padding: 24px;
+  border: 1px solid rgba(23, 23, 23, 0.12);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.education-item span {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: rgba(23, 23, 23, 0.5);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.education-item h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.15rem, 2.5vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.education-item p {
+  margin: 0;
+  color: rgba(23, 23, 23, 0.68);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.certificates-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: #171717;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.certificates-link:hover {
+  opacity: 0.68;
+}
+
+@media screen and (min-width: 768px) {
+  .education-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+.certificates-link {
+  display: block;
+  width: fit-content;
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+}
 
   /* CTA */
 
