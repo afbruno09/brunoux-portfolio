@@ -1,0 +1,161 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Comgás Field Safety App",
+  client: "Comgás",
+  year: "2024",
+  role: "Product Designer",
+  duration: "Product discovery and prototype",
+  platform: "Mobile app + web dashboard",
+  summary:
+    "A digital safety workflow designed to replace paper-based field forms, helping technicians document operational risks and enabling office teams to review evidence with more clarity.",
+
+  heroImage: "/images/comgas/cover.jpg",
+  heroAlt: "Comgás field safety app case study cover",
+
+  challenge: [
+    "Field technicians relied on manual processes to register operational risks, document evidence, and report safety conditions during field activities.",
+    "The challenge was to transform a paper-based workflow into a digital experience that worked well in real field conditions while keeping the process clear for both technicians and office teams.",
+  ],
+
+  solution: [
+    "I designed a mobile-first workflow for field technicians to identify risks, capture photos or videos, and submit structured evidence directly from the operation site.",
+    "The solution also included a web dashboard concept for office teams to review submissions, track documentation, and support safer decision-making across operations.",
+  ],
+
+  impact: [
+    "Reduced dependency on fragmented paper-based documentation.",
+    "Created a clearer connection between field evidence and office review.",
+    "Improved visibility over operational risks and documentation status.",
+  ],
+
+  metadata: [
+    { label: "Scope", value: "UX/UI + Field Research" },
+    { label: "Context", value: "Energy and field operations" },
+    { label: "Users", value: "Technicians and office managers" },
+    { label: "Output", value: "Mobile app and dashboard prototype" },
+  ],
+
+  sections: [
+    {
+      id: "overview",
+      eyebrow: "Overview",
+      title: "Digitizing a safety-critical field workflow",
+      content: [
+        "The project focused on improving how field teams register and communicate risks during operational activities.",
+        "Instead of relying on paper forms and fragmented documentation, the proposed experience created a more structured way to capture information, evidence, and status updates.",
+      ],
+      image: {
+        src: "/images/comgas/overview.jpg",
+        alt: "Overview of the Comgás field safety app interface",
+      },
+    },
+
+    {
+      id: "field-context",
+      eyebrow: "Field context",
+      title: "Designing for real operational conditions",
+      content: [
+        "The experience needed to work for technicians in the field, where time, context, and clarity matter more than visual complexity.",
+        "This required a practical mobile-first interface with clear steps, direct actions, and low cognitive load during risk registration.",
+      ],
+      image: {
+        src: "/images/comgas/field-context.jpg",
+        alt: "Field context and technician workflow for the Comgás project",
+      },
+    },
+
+    {
+      id: "risk-registration",
+      eyebrow: "Risk registration",
+      title: "Making risk identification easier and more structured",
+      content: [
+        "One of the core flows was the risk registration process. The interface guides technicians through selecting the type of risk, adding context, and documenting evidence.",
+        "The goal was to reduce ambiguity and make each submission easier to review later by the office team.",
+      ],
+      image: {
+        src: "/images/comgas/risk-registration.jpg",
+        alt: "Risk registration flow in the Comgás mobile app",
+      },
+    },
+
+    {
+      id: "evidence",
+      eyebrow: "Evidence capture",
+      title: "Connecting photos, videos, and field information",
+      content: [
+        "Evidence capture was a key part of the workflow. The app allows technicians to attach visual records to support the reported risk.",
+        "This helped create a more reliable link between what happened in the field and what the office team needed to analyze.",
+      ],
+      image: {
+        src: "/images/comgas/evidence.jpg",
+        alt: "Evidence capture screens with photos and videos",
+      },
+    },
+
+    {
+      id: "dashboard",
+      eyebrow: "Web dashboard",
+      title: "Supporting review and decision-making from the office",
+      content: [
+        "The web dashboard was designed to help managers review field submissions with more context and consistency.",
+        "It brings together submitted reports, evidence, status, location, and operational information in a clearer review environment.",
+      ],
+      image: {
+        src: "/images/comgas/dashboard.jpg",
+        alt: "Comgás web dashboard for reviewing field safety reports",
+      },
+    },
+
+    {
+      id: "flow",
+      eyebrow: "End-to-end flow",
+      title: "From field registration to office review",
+      content: [
+        "The solution connects the technician’s field workflow with the office team’s review process.",
+        "This end-to-end view helped clarify responsibilities, information flow, and the relationship between mobile input and web-based analysis.",
+      ],
+      image: {
+        src: "/images/comgas/flow.jpg",
+        alt: "End-to-end flow connecting mobile app and web dashboard",
+      },
+    },
+
+    {
+      id: "mobile",
+      eyebrow: "Mobile-first design",
+      title: "A compact interface for fast field use",
+      content: [
+        "The mobile experience was designed to prioritize speed, clarity, and direct interaction.",
+        "Screens were kept focused, with short forms, clear labels, and visible progress to help technicians complete the process without unnecessary friction.",
+      ],
+      image: {
+        src: "/images/comgas/mobile.jpg",
+        alt: "Mobile screens of the Comgás field safety app",
+      },
+    },
+
+    {
+      id: "outcome",
+      eyebrow: "Outcome",
+      title: "A clearer operational safety experience",
+      content: [
+        "The prototype helped translate a complex field documentation process into a more usable digital workflow.",
+        "It created a stronger bridge between technicians and office teams, improving how operational risks could be documented, reviewed, and acted upon.",
+      ],
+      image: {
+        src: "/images/comgas/final.jpg",
+        alt: "Final visual presentation of the Comgás case study",
+      },
+    },
+  ],
+
+  nextProject: {
+    title: "Canguru",
+    href: "/work/canguru",
+  },
+};
+---
+
+<ProjectCase project={project} />

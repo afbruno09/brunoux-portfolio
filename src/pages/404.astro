@@ -1,0 +1,389 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { navigationLinks } from "../data/navigation";
+
+const pageNavigationLinks = navigationLinks.map((link) => {
+  if (link.label === "Projects") {
+    return { ...link, href: "/#projects" };
+  }
+
+  return link;
+});
+---
+
+<BaseLayout
+  title="Page not found | Bruno Amorim"
+  description="This portfolio page is still being worked on."
+>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo">Bruno Amorim</a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Open menu"
+      >
+        <span class="menu-toggle-line"></span>
+        <span class="menu-toggle-line"></span>
+      </button>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <ul>
+          {pageNavigationLinks.map((link) => (
+            <li>
+              {link.label === "Resume" ? (
+                <button type="button" class="nav-link-button" data-open-resume>
+                  {link.label}
+                </button>
+              ) : link.label === "Contact" ? (
+                <button type="button" class="nav-link-button" data-open-contact>
+                  {link.label}
+                </button>
+              ) : (
+                <a href={link.href}>{link.label}</a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <div class="container">
+        <div class="mobile-nav-panel">
+          <ul>
+            {pageNavigationLinks.map((link) => (
+              <li>
+                {link.label === "Resume" ? (
+                  <button type="button" class="nav-link-button" data-open-resume>
+                    {link.label}
+                  </button>
+                ) : link.label === "Contact" ? (
+                  <button type="button" class="nav-link-button" data-open-contact>
+                    {link.label}
+                  </button>
+                ) : (
+                  <a href={link.href}>{link.label}</a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="not-found-page">
+    <section class="not-found-hero">
+      <div class="container not-found-inner">
+        <div class="not-found-copy">
+          <h1>This page is still in progress.</h1>
+          <p>
+            I’m still shaping this part of the portfolio. In the meantime, you
+            can return to the home page, explore selected work or get in touch
+            directly.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="/">Back to Home</a>
+            <a class="button button-secondary" href="/#projects">View selected work</a>
+            <button type="button" class="button button-secondary" data-open-contact>
+              Contact Me
+            </button>
+          </div>
+        </div>
+
+        <div class="not-found-animation" aria-hidden="true">
+          <dotlottie-player
+            src="/animations/404.lottie"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+          ></dotlottie-player>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div
+    id="resume-modal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="resume-modal-title"
+  >
+    <button
+      type="button"
+      class="modal-overlay"
+      aria-label="Close resume modal"
+      data-close-resume
+    ></button>
+
+    <div class="modal-dialog">
+      <button
+        type="button"
+        class="modal-close"
+        aria-label="Close resume modal"
+        data-close-resume
+      >
+        ×
+      </button>
+
+      <div class="resume-page-card">
+        <div class="resume-page-content">
+          <h2 id="resume-modal-title">Bruno Amorim — Resume</h2>
+          <p>
+            Use the options below to download the file or view it directly in your browser.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="button button-primary"
+              href="/files/bruno-amorim-resume.pdf"
+              download
+            >
+              Download Resume
+            </a>
+
+            <a
+              class="button button-secondary"
+              href="/files/bruno-amorim-resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="contact-modal"
+    class="modal"
+    hidden
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-modal-title"
+  >
+    <button
+      type="button"
+      class="modal-overlay"
+      aria-label="Close contact modal"
+      data-close-contact
+    ></button>
+
+    <div class="modal-dialog">
+      <button
+        type="button"
+        class="modal-close"
+        aria-label="Close contact modal"
+        data-close-contact
+      >
+        ×
+      </button>
+
+      <div class="contact-page-card">
+        <div class="contact-page-content">
+          <h2 id="contact-modal-title">Let’s talk</h2>
+          <p>
+            Feel free to reach out for freelance work, remote opportunities
+            or design collaborations.
+          </p>
+
+          <ul class="contact-list">
+            <li>
+              <strong>Email:</strong>
+              <a href="mailto:contact@brunoux.com">contact@brunoux.com</a>
+            </li>
+            <li>
+              <strong>Phone:</strong>
+              <a href="tel:+5511951476087">+55 11 95147-6087</a>
+            </li>
+            <li>
+              <strong>LinkedIn:</strong>
+              <a
+                href="https://www.linkedin.com/in/bruno-amorimf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                linkedin.com/in/bruno-amorimf
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+
+  <style>
+    .not-found-page {
+      min-height: calc(100vh - 68px);
+    }
+
+    .not-found-hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      align-items: center;
+      padding: var(--space-12) 0;
+    }
+
+    .not-found-inner {
+      max-width: var(--container);
+      display: grid;
+      align-items: center;
+      gap: var(--space-5);
+    }
+
+    .not-found-copy {
+      display: grid;
+      gap: var(--space-5);
+    }
+
+    .not-found-animation {
+      width: min(100%, 680px);
+    }
+
+    .not-found-animation dotlottie-player {
+      display: block;
+      width: 100%;
+      height: min(58vh, 560px);
+    }
+
+    .not-found-inner h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .not-found-inner p {
+      max-width: 560px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    @media (min-width: 900px) {
+      .not-found-inner {
+        grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+        gap: var(--space-12);
+      }
+
+      .not-found-animation {
+        justify-self: end;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.querySelector("#mobile-menu");
+    const mobileMenuLinks = document.querySelectorAll("#mobile-menu a");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+        menuToggle.setAttribute(
+          "aria-label",
+          isExpanded ? "Open menu" : "Close menu"
+        );
+        mobileMenu.hidden = isExpanded;
+      });
+
+      mobileMenuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.setAttribute("aria-expanded", "false");
+          menuToggle.setAttribute("aria-label", "Open menu");
+          mobileMenu.hidden = true;
+        });
+      });
+    }
+
+    const resumeModal = document.querySelector("#resume-modal");
+    const openResumeButtons = document.querySelectorAll("[data-open-resume]");
+    const closeResumeButtons = document.querySelectorAll("[data-close-resume]");
+    const contactModal = document.querySelector("#contact-modal");
+    const openContactButtons = document.querySelectorAll("[data-open-contact]");
+    const closeContactButtons = document.querySelectorAll("[data-close-contact]");
+
+    function openResumeModal() {
+      if (!resumeModal) return;
+      resumeModal.hidden = false;
+      resumeModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      document.documentElement.classList.add("modal-open");
+    }
+
+    function closeResumeModal() {
+      if (!resumeModal) return;
+      resumeModal.hidden = true;
+      resumeModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      document.documentElement.classList.remove("modal-open");
+    }
+
+    function openContactModal() {
+      if (!contactModal) return;
+      contactModal.hidden = false;
+      contactModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      document.documentElement.classList.add("modal-open");
+    }
+
+    function closeContactModal() {
+      if (!contactModal) return;
+      contactModal.hidden = true;
+      contactModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      document.documentElement.classList.remove("modal-open");
+    }
+
+    openResumeButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openResumeModal();
+      });
+    });
+
+    closeResumeButtons.forEach((button) => {
+      button.addEventListener("click", closeResumeModal);
+    });
+
+    openContactButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openContactModal();
+      });
+    });
+
+    closeContactButtons.forEach((button) => {
+      button.addEventListener("click", closeContactModal);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeResumeModal();
+        closeContactModal();
+      }
+    });
+  </script>
+</BaseLayout>
