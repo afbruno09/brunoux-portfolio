@@ -5,6 +5,7 @@ export interface ProjectSection {
   eyebrow?: string;
   content?: string[];
   bullets?: string[];
+  youtubeUrl?: string;
   image?: {
     src: string;
     alt: string;
@@ -150,20 +151,32 @@ const { project } = Astro.props as { project: ProjectData };
                 )}
               </div>
 
-              {section.image && (
-                <figure class="section-media">
-                  <button
-  class="image-trigger"
-  type="button"
-  data-lightbox-src={section.image.src}
-  data-lightbox-alt={section.image.alt}
-  aria-label="Open image"
->
-  <img src={section.image.src} alt={section.image.alt} />
-</button>
-                  {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
-                </figure>
-              )}
+              {section.youtubeUrl && (
+  <div class="video-embed">
+    <iframe
+      src={section.youtubeUrl}
+      title={`${section.title} video`}
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+    ></iframe>
+  </div>
+)}
+
+{section.image && (
+  <figure class="section-media">
+    <button
+      class="image-trigger"
+      type="button"
+      data-lightbox-src={section.image.src}
+      data-lightbox-alt={section.image.alt}
+      aria-label="Open image"
+    >
+      <img src={section.image.src} alt={section.image.alt} />
+    </button>
+    {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
+  </figure>
+)}
             </div>
           </section>
         ))}
@@ -524,7 +537,28 @@ body.lightbox-open {
     top: 8px;
     right: 8px;
   }
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 4px);
+  background: #000;
 }
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+
+}
+
+
 
 </style>
 
