@@ -9,7 +9,7 @@ const project = {
   duration: "MVP design",
   platform: "Mobile app",
   summary:
-    "A mobile pregnancy app designed to support expecting mothers with clear guidance, useful information, and a more accessible way to follow their pregnancy journey.",
+    "A mobile health experience designed to support pregnant women with accessible guidance, pregnancy tracking, and reliable information throughout their journey.",
 
   heroImage: "/images/canguru/cover.jpg",
   heroAlt: "Canguru pregnancy app case study cover",
@@ -43,8 +43,9 @@ const project = {
       eyebrow: "Overview",
       title: "A supportive mobile experience for pregnancy guidance",
       content: [
-        "Canguru was designed as a mobile app to help expecting mothers access information and follow important moments during pregnancy.",
-        "The experience focused on making content easier to understand, reducing uncertainty, and creating a more welcoming digital environment for users.",
+        "Canguru was a mobile app designed to support pregnant women during pregnancy by providing educational content, weekly tracking, community interaction, and access to reliable guidance.",
+        "The product aimed to reduce uncertainty by organizing pregnancy information in a clearer, friendlier, and more accessible way.",
+        "My role involved understanding user needs, mapping flows, creating low-fidelity prototypes, testing the experience with users, and designing a more consistent mobile interface.",
       ],
       image: {
         src: "/images/canguru/overview.jpg",
@@ -53,16 +54,83 @@ const project = {
     },
 
     {
-      id: "problem",
-      eyebrow: "Problem",
-      title: "Making sensitive information easier to access",
+      id: "legacy-screens",
+      eyebrow: "Legacy screens",
+      title: "Understanding the legacy experience",
       content: [
-        "Pregnancy-related information can easily become fragmented, technical, or emotionally overwhelming.",
-        "The product needed to present guidance in a way that felt clear, calm, and useful, while respecting the sensitivity of the user’s context.",
+        "Before redesigning the product, I analyzed the existing app experience to understand its structure, content, and usability limitations.",
+        "The legacy screens already included important features, such as pregnancy information, questions, articles, and community interactions. However, the interface needed clearer hierarchy, better navigation, and more visual consistency.",
+        "This analysis helped define what should be preserved, improved, or reorganized in the new experience.",
       ],
       image: {
-        src: "/images/canguru/problem.jpg",
-        alt: "Problem framing for the Canguru pregnancy app",
+        src: "/images/canguru/legacy-screens.jpg",
+        alt: "Legacy screens of the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "research",
+      eyebrow: "Research",
+      title: "Understanding the pregnancy journey",
+      content: [
+        "To understand the needs of pregnant women, we looked at how they search for information, what doubts appear during pregnancy, and which moments create anxiety or uncertainty.",
+        "The research showed that users needed more than medical content. They needed a clear, friendly, and trustworthy way to follow their pregnancy week by week.",
+        "Interview insight: “I want to understand what happens each week of pregnancy, both for me and for the baby.” — Elaine",
+        "Interview insight: “I miss having a more direct way to ask questions and get reliable guidance.” — Ana",
+        "Interview insight: “People keep asking how many months pregnant I am, but everything is counted in weeks.” — Tatyane",
+        "Interview insight: “There should be a simple chart showing how weeks and months relate during pregnancy.” — Luciana",
+      ],
+      image: {
+        src: "/images/canguru/research.jpg",
+        alt: "Research insights and interview quotes from the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "personas-user-journey",
+      eyebrow: "Personas and user journeys",
+      title: "Mapping different pregnancy contexts",
+      content: [
+        "Based on the research insights, I created personas and mapped the user journey to better understand different pregnancy contexts, emotional states, and information needs.",
+        "The personas helped avoid designing for a generic pregnant user and clarified how the product should adapt to different levels of confidence, knowledge, and emotional need.",
+        "The journey map organized the experience into five stages: knowing, starting, using, developing, and leaving.",
+        "This helped connect user expectations with concrete product decisions, from onboarding and pregnancy tracking to educational content and community support.",
+        "The journey showed that the biggest opportunities were not only in the app’s features, but in maintaining trust and engagement throughout pregnancy.",
+      ],
+      image: {
+        src: "/images/canguru/personas-journey.jpg",
+        alt: "Personas and user journey map for the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "low-fidelity-prototypes",
+      eyebrow: "Low-fidelity prototypes",
+      title: "Exploring the experience through quick sketches",
+      content: [
+        "Before moving into high-fidelity screens, I explored the product experience through quick sketches, paper prototypes, user journeys, and persona boards.",
+        "This helped organize the main flows, test different interface structures, and understand how the app could present pregnancy information in a simple and accessible way.",
+        "The goal was not to define the final visual language at this stage, but to quickly materialize ideas, compare alternatives, and make better product decisions before moving into detailed UI design.",
+      ],
+      image: {
+        src: "/images/canguru/low-fidelity.jpg",
+        alt: "Low-fidelity sketches and paper prototypes for the Canguru app",
+      },
+    },
+
+    {
+      id: "prototype-testing",
+      eyebrow: "Prototype testing",
+      title: "Validating the mobile prototype with real users",
+      content: [
+        "I conducted usability testing sessions with users to evaluate the mobile prototype and understand how they interacted with the app.",
+        "The sessions revealed usability issues, content gaps, and moments of confusion. These insights helped refine the flow, improve the clarity of pregnancy information, and make the experience more intuitive and reassuring.",
+        "Using a dual-camera setup, one camera captured the participant’s reactions while the other recorded their navigation on the device.",
+        "This approach helped identify not only what users did, but also how they reacted emotionally to the experience.",
+      ],
+      image: {
+        src: "/images/canguru/prototype-testing.jpg",
+        alt: "Usability testing sessions with users interacting with the Canguru app prototype",
       },
     },
 
@@ -71,8 +139,8 @@ const project = {
       eyebrow: "User flow",
       title: "Structuring the journey around key moments",
       content: [
-        "The app experience was organized around the main needs of expecting mothers: understanding pregnancy progress, accessing relevant content, and finding guidance when needed.",
-        "This helped define a simpler navigation model and a more focused mobile journey.",
+        "The user flow was structured to reduce effort and make the main actions easy to reach.",
+        "The goal was to create a predictable navigation system where users could move between pregnancy tracking, educational content, questions, and community features without confusion.",
       ],
       image: {
         src: "/images/canguru/user-flow.jpg",
@@ -81,44 +149,48 @@ const project = {
     },
 
     {
-      id: "mobile",
-      eyebrow: "Mobile experience",
-      title: "Clear screens for everyday use",
-      content: [
-        "The mobile interface prioritized legibility, simple actions, and a soft visual structure.",
-        "Each screen was designed to help users quickly understand where they are, what information matters, and what they can do next.",
-      ],
-      image: {
-        src: "/images/canguru/mobile.jpg",
-        alt: "Mobile screens of the Canguru pregnancy app",
-      },
-    },
-
-    {
       id: "design-system",
-      eyebrow: "Design direction",
+      eyebrow: "Interface and design system",
       title: "A visual language built around care and clarity",
       content: [
-        "The interface direction used a friendly tone, soft hierarchy, and accessible components to support a calm user experience.",
+        "A lightweight design system was created to maintain consistency across the app.",
+        "Components such as cards, navigation elements, buttons, icons, and content blocks helped organize information while keeping the interface visually coherent.",
         "The design needed to feel human and approachable without sacrificing usability or structure.",
       ],
       image: {
         src: "/images/canguru/design-system.jpg",
-        alt: "Design direction and visual system of the Canguru app",
+        alt: "Design system and visual direction of the Canguru app",
       },
     },
 
     {
-      id: "final",
-      eyebrow: "Outcome",
-      title: "A clearer foundation for a pregnancy support product",
+      id: "final-experience",
+      eyebrow: "Final experience",
+      title: "A clearer and more supportive mobile experience",
       content: [
-        "The final prototype helped translate the product idea into a usable mobile experience.",
-        "It created a foundation for future validation, content expansion, and product evolution around pregnancy support.",
+        "The final experience brought together pregnancy tracking, educational content, community interaction, and quick access to doubts in a more organized and accessible mobile interface.",
+        "The app was designed to feel clear, friendly, and supportive, helping users follow their pregnancy journey with less uncertainty and more confidence.",
+        "To demonstrate the interaction flow, I also created a video walkthrough showing how the main features work together in the final experience.",
       ],
+       youtubeUrl: "<iframe width="560" height="315" src="https://www.youtube.com/embed/pNYIWjm0ywA?si=1o2R2bsOsKpdIM1C" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>",
       image: {
         src: "/images/canguru/final.jpg",
-        alt: "Final presentation of the Canguru pregnancy app case study",
+        alt: "Final experience of the Canguru pregnancy app",
+      },
+    },
+
+    {
+      id: "outcome",
+      eyebrow: "Outcome",
+      title: "Making pregnancy information more approachable",
+      content: [
+        "Canguru became a strong example of how product design can make healthcare information more approachable.",
+        "The project combined research, journey mapping, rapid prototyping, usability testing, and interface design to create a mobile experience focused on clarity, trust, and emotional support.",
+        "The final solution helped translate pregnancy information into a more accessible and reassuring experience for users.",
+      ],
+      image: {
+        src: "/images/canguru/mobile.jpg",
+        alt: "Final mobile screens of the Canguru pregnancy app",
       },
     },
   ],
