@@ -290,10 +290,10 @@ button {
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.6rem, 9vw, 4.75rem);
+  font-size: clamp(2.35rem, 8vw, 4.25rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
-  max-width: 11ch;
+  max-width: 13ch;
 }
 
 .hero-description {
@@ -964,8 +964,8 @@ body.modal-open {
   }
 
   .hero h1 {
-    max-width: 8ch;
-    font-size: clamp(3.8rem, 6vw, 5.5rem);
+    max-width: 12ch;
+    font-size: clamp(3.25rem, 5vw, 4.85rem);
   }
 
   .hero-description {
