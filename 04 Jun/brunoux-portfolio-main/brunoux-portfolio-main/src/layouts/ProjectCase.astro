@@ -21,14 +21,12 @@ export interface ProjectData {
   client: string;
   year: string;
   role: string;
-  duration?: string;
   platform?: string;
   summary: string;
   heroImage?: string;
   heroAlt?: string;
   challenge: string[];
   solution: string[];
-  impact: string[];
   metadata?: {
     label: string;
     value: string;
@@ -173,12 +171,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
         <span>Role</span>
         <strong>{project.role}</strong>
       </div>
-      {project.duration && (
-        <div>
-          <span>Duration</span>
-          <strong>{project.duration}</strong>
-        </div>
-      )}
       {project.platform && (
         <div>
           <span>Platform</span>
@@ -280,22 +272,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
             </div>
           </section>
         ))}
-
-      {project.impact.length > 0 && (
-        <section class="project-impact">
-          <div class="container">
-            <p class="section-label">Outcome</p>
-            <h2>Impact and learnings</h2>
-            <div class="impact-list">
-              {project.impact.map((item) => (
-                <div class="impact-card">
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       <section class="project-cta">
         <div class="container cta-box">
@@ -616,7 +592,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
   .project-overview,
   .project-facts,
   .project-section,
-  .project-impact,
   .project-cta {
     margin-top: 28px;
   }
@@ -625,7 +600,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
   .project-overview .container,
   .project-facts .container,
   .project-section .container,
-  .project-impact .container,
   .project-cta .container {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -949,7 +923,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
     .project-overview .container,
     .project-facts .container,
     .project-section .container,
-    .project-impact .container,
     .project-cta .container {
       padding: 40px;
     }
