@@ -7,7 +7,7 @@ Cada página/case passa por 4 estágios: **Material & Informações** (levantar 
 | Página / Case | Material & Info | Wireframe | Desenvolvimento | Deploy | Notas |
 | --- | --- | --- | --- | --- | --- |
 | Home | Concluído | Concluído | Publicado anteriormente | Publicado anteriormente | Revisar copy/estrutura quando novos cases entrarem |
-| About | Concluído | Concluído | Publicado anteriormente | Publicado anteriormente | Revisado em 24/09: 10+ anos, experiência agrupada com links para os 9 cases, seção Beyond design com o trabalho de IA. Falta commit + push + deploy. |
+| About | Concluído | Concluído | Publicado anteriormente | Publicado anteriormente | Revisado em 24/09: 10+ anos, experiência agrupada com links para os 9 cases, seção Beyond design com o trabalho de IA. Publicado em 24/09. |
 | Contact | Concluído | Concluído | Publicado anteriormente | Publicado anteriormente | — |
 | Resume | Concluído | Concluído | Publicado anteriormente | Publicado anteriormente | — |
 | Case: Canguru | Concluído | Concluído | Concluído | Concluído | [Wireframe](https://claude.ai/artifact/MVz6APrJ5CoRjzTPDQGqck). Material real do Framer antigo (imagens + PDF em `Documents/Projetos/Canguru`), copy em inglês, sem métricas inventadas. Trabalho em equipe (confirmado). Página refeita conforme o wireframe em 22/09 com as 9 imagens originais (contexto com texto da página de 2018, pesquisa 57/15/2 = 74 entrevistados, 3 critérios, 4 telas da solução, reflexão); publicada em 24/09. |
