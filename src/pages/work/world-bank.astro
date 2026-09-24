@@ -4,170 +4,236 @@ import ProjectCase from "../../layouts/ProjectCase.astro";
 const project = {
   title: "World Bank / Ministry of Labor",
   client: "World Bank + Ministry of Labor",
-  year: "2025",
-  role: "Product Designer",
+  year: "2025–2026",
+  role: "Product Designer, IA & Product Strategy",
   platform: "Web platform",
   summary:
-    "A labor market information platform prototype designed to connect jobs, training, and public services in a clearer and more useful experience.",
+    "A strategic prototype for Portal Emprega Brasil, created with the World Bank team to unify fragmented employment, training, career guidance and public support services into one coherent platform.",
 
-  heroImage: "/images/world-bank/cover.jpg",
-  heroAlt: "World Bank project cover showing Emprega Brasil platform mockup",
+  heroImage: "/images/world-bank/cover-opt.jpg",
+  heroAlt: "Emprega Brasil platform home screen",
+  hideOverview: true,
 
   challenge: [
-    "The project involved turning a complex ecosystem of labor information, courses, and professional guidance into a digital experience that was easier to understand and navigate.",
-    "It also needed to support different user profiles, such as citizens, advisors, and institutions, balancing distinct needs within the same platform.",
+    "Employment-related services were distributed across different systems, making it harder for workers to understand where to start and harder for institutions to coordinate the full journey. The challenge was to organize a platform that could serve workers, companies, schools and social workers without exposing users to the complexity of the ecosystem behind it.",
   ],
 
-  solution: [
-    "I worked on structuring the information architecture, defining key journeys, and designing interfaces that made the system easier to understand for multiple audiences.",
-    "The work prioritized clarity, visual hierarchy, and stakeholder validation, helping transform abstract discussions into a more concrete prototype.",
-  ],
-
-  metadata: [
-    { label: "Scope", value: "UX/UI + Information Architecture" },
-    { label: "Context", value: "Public sector" },
-    { label: "Users", value: "Citizens, advisors, and institutions" },
-  ],
+  solution: [],
 
   sections: [
     {
-      id: "overview",
-      eyebrow: "Overview",
-      title: "A platform designed to connect data, services, and opportunities",
-      content: [
-        "The project aimed to support the creation of a system capable of bringing together relevant labor market information, professional training, and access to public services in a unified digital experience.",
-        "More than simply presenting data, the platform needed to guide decision-making and make the path forward clearer for people at different stages of their professional journey.",
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Problem",
+          body: "Employment services scattered across systems — workers couldn't tell where to start, institutions couldn't coordinate the journey.",
+        },
+        {
+          title: "Role",
+          body: "Only designer and technology profile on the team — led IA, product strategy, prototype and handoff logic.",
+        },
+        {
+          title: "4 key decisions",
+          bullets: [
+            "Serve high-intent users first (search up top)",
+            "Create a path for uncertain users (guided assistance)",
+            "Connect 5 services as one journey, not silos",
+            "Hide institutional complexity behind practical choices",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "Presented to World Bank + Ministry of Labor stakeholders, approved, and taken forward as the foundation for development.",
+        },
       ],
-      image: {
-        src: "/images/world-bank/overview.jpg",
-        alt: "Overview of the Emprega Brasil platform home page",
-      },
+    },
+
+    {
+      id: "context",
+      eyebrow: "Challenge",
+      title: "Context and problem",
+      layout: "text-first",
+      content: [
+        "Employment-related services were distributed across different systems, making it harder for workers to understand where to start and harder for institutions to coordinate the full journey. The challenge was to organize a platform that could serve workers, companies, schools and social workers without exposing users to the complexity of the ecosystem behind it.",
+      ],
+    },
+
+    {
+      id: "prototype",
+      kind: "embed",
+      eyebrow: "Evidence — live prototype",
+      title: "See the real Figma file, not a summary slide",
+      content: [
+        "Instead of another static illustration, this section embeds the actual Figma prototype — flows, screens and the full file — so anyone reviewing the case can explore the real work, not a recap of it.",
+      ],
+      embedUrl:
+        "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/AuYgDHbZjpm6PN4bm1QGQ4/Portal-Emprega-Brasil----2026?node-id=80-441",
+      embedTitle: "Portal Emprega Brasil — Figma prototype",
+      ctaHref:
+        "https://www.figma.com/design/AuYgDHbZjpm6PN4bm1QGQ4/Portal-Emprega-Brasil----2026?node-id=80-441",
+      ctaLabel: "Open the Figma file ↗",
     },
 
     {
       id: "architecture",
       eyebrow: "Architecture",
-      title: "Structuring the ecosystem into clearer flows",
+      title: "Organizing a complex service ecosystem around user intent",
       content: [
-        "A key part of the work was defining how different entry points from the home page could connect users to jobs, occupations, courses, and labor market data.",
-        "The architecture helped make the product more coherent by clarifying the relationship between existing content and new screens needed to complete the journey.",
+        "The architecture separated user intent from institutional complexity. Workers could start from a search, a guided path, or broader exploration, while companies, schools and social workers had clearer roles in the ecosystem — supporting different levels of certainty: immediate action, orientation, or discovery.",
       ],
-      image: {
-        src: "/images/world-bank/architecture.jpg",
-        alt: "Information architecture of the World Bank project",
-      },
+      kind: "diagram",
+      diagramEyebrow: "Platform architecture",
+      diagramTitle: "Four audiences, one service ecosystem",
+      diagramSubtitle:
+        "The product strategy organized multiple institutional responsibilities around a coherent worker journey, without making users navigate the bureaucracy behind the service.",
+      diagramCenter: { title: "Portal Emprega Brasil" },
+      diagramNodes: [
+        { title: "Workers", body: "Find jobs, courses, guidance, and support" },
+        { title: "Companies", body: "Publish jobs and connect with candidates" },
+        { title: "Schools", body: "Manage courses and training opportunities" },
+        { title: "Social workers", body: "Support workers through complex cases" },
+      ],
     },
 
     {
-      id: "search",
-      eyebrow: "Search",
-      title: "Job and course search as the main entry point",
+      id: "decisions",
+      kind: "cards",
+      eyebrow: "Key UX decisions",
+      title: "Design decisions that reduced bureaucratic friction",
       content: [
-        "The experience was designed to offer a direct entry point for users who already arrived with a clear goal, such as finding a job, course, or occupation.",
-        "This entry point needed to reduce friction and help users move quickly toward relevant results without requiring prior knowledge of the system.",
+        "The home page works as a decision layer: instead of asking users to understand the full service ecosystem upfront, it helps them choose the next best path based on their goal, confidence level and need for support.",
       ],
-      image: {
-        src: "/images/world-bank/search.jpg",
-        alt: "Job and course search screen",
-      },
+      cards: [
+        {
+          title: "Serve high-intent users first",
+          body: "The job and course search module appears first because some users arrive with a clear task — a direct route to action without institutional content in the way.",
+        },
+        {
+          title: "Create a path for uncertain users",
+          body: "The guided assistance flow supports people who don't yet know whether they need a job, a course, career information, or help from a social worker.",
+        },
+        {
+          title: "Connect services through a journey",
+          body: "Career discovery, qualification, job search, support and progress tracking are connected as one journey instead of separate service silos.",
+        },
+        {
+          title: "Make institutional complexity usable",
+          body: "The interface avoids exposing the full administrative structure — focused on practical choices, so users move from orientation to action with less effort.",
+        },
+      ],
     },
 
     {
-      id: "guide",
-      eyebrow: "Guidance",
-      title: "A guided path to turn uncertainty into action",
-      content: [
-        "Beyond direct search, the concept also considered users who did not yet know exactly what to look for. For them, the guided experience helps transform uncertainty into concrete possibilities.",
-        "This component broadens accessibility, especially for users who need more support navigating between employment, training, and professional guidance.",
+      id: "screens",
+      eyebrow: "Product evidence — real screens",
+      title: "Search, guidance, exploration and detail",
+      layout: "image-first",
+      images: [
+        {
+          src: "/images/world-bank/overview-opt.jpg",
+          alt: "Career options screen with occupation search and categories to explore professions",
+          caption: "Career options — search and explore occupations",
+        },
+        {
+          src: "/images/world-bank/search-opt.jpg",
+          alt: "Job search results screen",
+          caption: "Job and course search",
+        },
+        {
+          src: "/images/world-bank/guide-opt.jpg",
+          alt: "SINE office locator and public services screen",
+          caption: "Guided assistance",
+        },
+        {
+          src: "/images/world-bank/explore-opt.jpg",
+          alt: "Featured courses and training opportunities screen",
+          caption: "Explore — service areas",
+        },
+        {
+          src: "/images/world-bank/detail-opt.jpg",
+          alt: "Job detail screen for a design role",
+          caption: "Detail page",
+        },
+        {
+          src: "/images/world-bank/mobile-opt.jpg",
+          alt: "Emprega Brasil screens on mobile",
+          caption: "Mobile — same hierarchy preserved",
+        },
       ],
-      image: {
-        src: "/images/world-bank/guide.jpg",
-        alt: "Guided assistance area of the Emprega Brasil project",
-      },
     },
 
     {
-      id: "explore",
-      eyebrow: "Explore",
-      title: "Core areas organized for quick understanding",
-      content: [
-        "The exploration section groups the platform’s main content areas into recognizable blocks, helping users quickly understand what they can do there.",
-        "This organization reinforces hierarchy, reduces cognitive load, and improves access to different needs within the same interface.",
-      ],
-      image: {
-        src: "/images/world-bank/explore.jpg",
-        alt: "Explore section with key cards",
-      },
-    },
-
-    {
-      id: "detail",
-      eyebrow: "Detail page",
-      title: "Deeper pages to support better decisions",
-      content: [
-        "After the initial entry point, the system needed more complete detail pages with enough information to support decisions about occupations, courses, and opportunities.",
-        "These screens deepen the context and make the journey more useful by connecting guidance, content, and action in the same flow.",
-      ],
-      image: {
-        src: "/images/world-bank/detail.jpg",
-        alt: "Detailed internal screen of the World Bank project",
-      },
-    },
-
-    {
-      id: "flow",
+      id: "journey",
+      kind: "journey",
       eyebrow: "Journey",
-      title: "Connecting multiple screens into one continuous logic",
+      title: "Connecting the full journey from career discovery to progress",
       content: [
-        "The project required different parts of the experience to work as a connected system rather than isolated pages.",
-        "This journey view shows how home, search, occupations, courses, and market data can work together to create a more consistent experience.",
+        "The home page, search results, guided assistance, exploration categories and detail pages had to behave as one connected system: discover career paths → choose training → search for jobs → receive support → follow progress.",
       ],
-      image: {
-        src: "/images/world-bank/flow.jpg",
-        alt: "Composition showing multiple screens of the project flow",
-      },
-    },
-
-    {
-      id: "mobile",
-      eyebrow: "Responsive design",
-      title: "Adapting the experience for mobile contexts",
-      content: [
-        "The navigation also needed to perform well on smaller screens while preserving clarity and quick access to the main pathways.",
-        "The mobile version reinforced the importance of concise content, visual hierarchy, and more objective components to keep the experience useful across devices.",
+      journeyStages: [
+        {
+          stage: "Discover career paths",
+          description:
+            "Understand occupations, interests, and labor market possibilities.",
+        },
+        {
+          stage: "Choose training",
+          description: "Find courses connected to the selected career direction.",
+        },
+        {
+          stage: "Search for jobs",
+          description: "Move from intent to relevant job opportunities.",
+        },
+        {
+          stage: "Receive support",
+          description:
+            "Access assistance when the path requires human guidance.",
+        },
+        {
+          stage: "Follow progress",
+          description: "Keep track of the next steps in the employment journey.",
+        },
       ],
-      image: {
-        src: "/images/world-bank/mobile.jpg",
-        alt: "Mobile version of the Emprega Brasil project",
-      },
     },
 
     {
       id: "process",
       eyebrow: "Process",
-      title: "Visual structure to support alignment and validation",
+      title: "Using prototypes to align product and stakeholder decisions",
+      layout: "text-first",
       content: [
-        "In addition to final screens, the process included supporting materials used to organize thinking, test directions, and align stakeholders around a more concrete vision.",
-        "These artifacts helped turn abstract discussions into more objective decisions about structure, priorities, and experience.",
+        "As the design and technology reference in the team, I used architecture, flows, interface states and design-system components to support alignment with the World Bank team and Ministry of Labor stakeholders — from sticky-note research through wireframes to the high-fidelity prototype.",
       ],
       image: {
-        src: "/images/world-bank/process.jpg",
-        alt: "Process artifacts from the World Bank project",
+        src: "/images/world-bank/process-opt.jpg",
+        alt: "Process from sticky-note research through wireframes to the high-fidelity prototype",
       },
     },
 
     {
-      id: "final",
+      id: "outcome",
+      kind: "checklist",
       eyebrow: "Final outcome",
-      title: "A clearer, stronger, and more communicable prototype",
+      title: "Approved and moved forward for development",
       content: [
-        "The outcome was a more organized and tangible proposal, better able to communicate the value of the product and the relationship between its different modules.",
-        "By giving form to the project vision, the prototype supported strategic conversations and opened the door to future evolution with greater clarity.",
+        "The prototype gave stakeholders a tangible platform vision for unifying employment, training, career guidance and public support services.",
       ],
-      image: {
-        src: "/images/world-bank/final.jpg",
-        alt: "Final closing image of the World Bank case study",
-      },
+      checklistItems: [
+        {
+          title: "Stakeholder approval",
+          body: "Presented with the World Bank team to Ministry of Labor stakeholders.",
+        },
+        {
+          title: "Development foundation",
+          body: "The proposal moved forward as a basis for implementation discussions.",
+        },
+        {
+          title: "Strategic clarity",
+          body: "Translated fragmented services into one connected platform journey.",
+        },
+      ],
     },
   ],
 
@@ -176,7 +242,6 @@ const project = {
     href: "/work/comgas",
   },
 };
-
 ---
 
 <ProjectCase project={project} />

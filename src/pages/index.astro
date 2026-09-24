@@ -11,9 +11,15 @@ const visibleTimelineItems = timelineItems.filter((item) => item.visibleOnHome);
 const hiddenTimelineItems = timelineItems.filter((item) => !item.visibleOnHome);
 
 const projectCaseLinks: Record<string, string> = {
-  "world-bank-ministry-of-labor": "/work/world-bank",
+  "world-bank": "/work/world-bank",
   comgas: "/work/comgas",
   canguru: "/work/canguru",
+  "doutor-ja": "/work/doutor-ja",
+  dux: "/work/dux",
+  "pet-mimo": "/work/pet-mimo",
+  blam: "/work/blam",
+  simplify: "/work/simplify",
+  "gerador-de-simulados": "/work/gerador-de-simulados",
 };
 ---
 
@@ -83,8 +89,6 @@ const projectCaseLinks: Record<string, string> = {
   </header>
 
   <main>
-    <div class="gear-cursor" aria-hidden="true"></div>
-
     <section class="hero section">
       <div class="container hero-inner">
         <div class="hero-content">
@@ -128,6 +132,15 @@ const projectCaseLinks: Record<string, string> = {
         </div>
       </div>
     </section>
+
+    <div class="container">
+      <a href="/chat" class="ai-cta">
+        <span class="ai-cta-text">
+          Prefer to ask instead of scroll? Try the AI assistant version of this portfolio.
+        </span>
+        <span class="ai-cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
 
     <section id="projects" class="projects section">
       <div class="container">
@@ -177,23 +190,45 @@ const projectCaseLinks: Record<string, string> = {
 
             <div class="projects-grid">
               {moreProjects.map((project) => (
-                <article class="project-card project-card-unavailable">
-                  <div class="project-card-link">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      class="project-card-image"
-                      loading="lazy"
-                    />
+                projectCaseLinks[project.slug] ? (
+                  <article class="project-card">
+                    <a href={projectCaseLinks[project.slug]} class="project-card-link">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        class="project-card-image"
+                        loading="lazy"
+                      />
 
-                    <div class="project-card-content">
-                      <h4>{project.title}</h4>
-                      <p class="project-category">{project.category}</p>
-                      <p class="project-summary">{project.summary}</p>
-                      <span class="project-cta">Overview available on request</span>
+                      <div class="project-card-content">
+                        <h4>{project.title}</h4>
+                        <p class="project-category">{project.category}</p>
+                        <p class="project-summary">{project.summary}</p>
+                        <span class="project-cta">
+                          View case <span aria-hidden="true">→</span>
+                        </span>
+                      </div>
+                    </a>
+                  </article>
+                ) : (
+                  <article class="project-card project-card-unavailable">
+                    <div class="project-card-link">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        class="project-card-image"
+                        loading="lazy"
+                      />
+
+                      <div class="project-card-content">
+                        <h4>{project.title}</h4>
+                        <p class="project-category">{project.category}</p>
+                        <p class="project-summary">{project.summary}</p>
+                        <span class="project-cta">Overview available on request</span>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                )
               ))}
             </div>
           </div>
@@ -451,28 +486,6 @@ const projectCaseLinks: Record<string, string> = {
         projectsToggle.textContent = isExpanded
           ? "View all projects"
           : "Hide projects";
-      });
-    }
-
-    const gearCursor = document.querySelector(".gear-cursor");
-    const unavailableProjectCards = document.querySelectorAll(
-      ".project-card-unavailable"
-    );
-
-    if (gearCursor && window.matchMedia("(pointer: fine)").matches) {
-      unavailableProjectCards.forEach((card) => {
-        card.addEventListener("pointerenter", () => {
-          gearCursor.classList.add("gear-cursor-visible");
-        });
-
-        card.addEventListener("pointermove", (event) => {
-          gearCursor.style.setProperty("--cursor-x", `${event.clientX}px`);
-          gearCursor.style.setProperty("--cursor-y", `${event.clientY}px`);
-        });
-
-        card.addEventListener("pointerleave", () => {
-          gearCursor.classList.remove("gear-cursor-visible");
-        });
       });
     }
 

@@ -1,0 +1,470 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Bruno Amorim Portfolio Assistant"
+  description="An AI-powered way to explore Bruno Amorim's UX/Product Design work, selected projects, experience, resume, and collaboration options."
+  image="https://www.brunoux.com/images/portfolio-assistant-orb-preview.png"
+>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="site-logo">Bruno Amorim</a>
+
+      <nav class="desktop-nav" aria-label="Chat page navigation">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#projects">Projects</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <button
+    class="language-toggle"
+    type="button"
+    data-language-toggle
+    aria-label="Ver chat em português"
+  >
+    Português
+  </button>
+
+  <main>
+    <section class="hero section chat-page-hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <p class="hero-name" data-i18n="hero.kicker">AI portfolio guide</p>
+          <h1 data-i18n="hero.title">Meet Bruno's Portfolio Assistant</h1>
+          <div
+            class="hero-orb"
+            data-hero-orb
+            aria-label="Animated portfolio assistant"
+          >
+            <div class="hero-orb-glow" aria-hidden="true"></div>
+            <div class="hero-media">
+              <dotlottie-player
+                src="/animations/orb.lottie"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay
+              ></dotlottie-player>
+            </div>
+          </div>
+
+          <p class="hero-chat-intro" data-hero-chat-intro data-i18n="chat.initial">
+            Hi, I can help you understand Bruno's projects, experience, and
+            which case best matches what you are looking for.
+          </p>
+
+          <div class="hero-chat">
+            <div
+              class="hero-chat-history"
+              data-hero-chat-history
+              aria-live="polite"
+            >
+            </div>
+
+            <form class="hero-chat-form" data-hero-chat-form>
+              <label class="visually-hidden" for="hero-chat-input">
+                Ask about Bruno's work and experiences
+              </label>
+              <input
+                id="hero-chat-input"
+                name="question"
+                type="text"
+                placeholder="Ask about Bruno's work"
+                data-i18n-placeholder="chat.placeholder"
+                autocomplete="off"
+              />
+              <button
+                class="button button-primary"
+                type="submit"
+                data-chat-submit
+                data-i18n="chat.ask"
+              >
+                Ask
+              </button>
+            </form>
+
+            <div class="hero-chat-suggestions" aria-label="Suggested questions">
+              <button
+                type="button"
+                data-chat-suggestion="Which project best shows UX strategy?"
+                data-chat-suggestion-en="Which project best shows UX strategy?"
+                data-chat-suggestion-pt="Qual projeto mostra melhor UX Strategy?"
+                data-i18n="chat.suggestionStrategy"
+              >
+                UX Strategy
+              </button>
+              <button
+                type="button"
+                data-chat-suggestion="Does Bruno have experience with complex products?"
+                data-chat-suggestion-en="Does Bruno have experience with complex products?"
+                data-chat-suggestion-pt="Bruno tem experiência com produtos complexos?"
+                data-i18n="chat.suggestionComplex"
+              >
+                Complex products
+              </button>
+              <button
+                type="button"
+                data-chat-suggestion="Why hire Bruno?"
+                data-chat-suggestion-en="Why hire Bruno?"
+                data-chat-suggestion-pt="Por que contratar o Bruno?"
+                data-i18n="chat.suggestionHire"
+              >
+                Why hire Bruno?
+              </button>
+              <button
+                type="button"
+                data-chat-suggestion="Show me a case with impact"
+                data-chat-suggestion-en="Show me a case with impact"
+                data-chat-suggestion-pt="Mostre um case com impacto"
+                data-i18n="chat.suggestionImpact"
+              >
+                Impact case
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+
+  <script is:inline>
+    const heroChatForm = document.querySelector("[data-hero-chat-form]");
+    const heroChatInput = document.querySelector("#hero-chat-input");
+    const heroChatHistory = document.querySelector("[data-hero-chat-history]");
+    const heroOrb = document.querySelector("[data-hero-orb]");
+    const heroChatIntro = document.querySelector("[data-hero-chat-intro]");
+    const heroChatSubmit = document.querySelector("[data-chat-submit]");
+    const heroChatSuggestions = document.querySelectorAll(
+      "[data-chat-suggestion]"
+    );
+    const languageToggle = document.querySelector("[data-language-toggle]");
+
+    const projectPreviews = {
+      "/work/world-bank": {
+        title: "World Bank / Ministry of Labor",
+        category: "Public Employment Platform",
+        image: "/images/projects/world-bank/cover-v3.jpg",
+      },
+      "/work/comgas": {
+        title: "Comgas Field Safety App",
+        category: "Field Operations / Safety Platform",
+        image: "/images/projects/comgas/cover.jpg",
+      },
+      "/work/canguru": {
+        title: "Canguru Pregnancy App",
+        category: "Mobile App / Health",
+        image: "/images/projects/canguru/cover.jpg",
+      },
+      "/work/doutor-ja": {
+        title: "Doutor Já — Carteira Saúde",
+        category: "Healthcare Platform",
+        image: "/images/projects/doutor-ja/hero-real.jpg",
+      },
+    };
+
+    const translations = {
+      en: {
+        "hero.kicker": "AI portfolio guide",
+        "hero.title": "Meet Bruno's Portfolio Assistant",
+        "chat.assistantName": "Bruno's Portfolio Assistant",
+        "chat.initial":
+          "Hi, I can help you understand Bruno's projects, experience, and which case best matches what you are looking for.",
+        "chat.placeholder": "Ask about Bruno's work",
+        "chat.ask": "Ask",
+        "chat.loading": "Looking through Bruno's selected work...",
+        "chat.error":
+          "I couldn't answer that right now. Please try again, or contact Bruno directly for more context.",
+        "chat.you": "You",
+        "chat.suggestionStrategy": "UX Strategy",
+        "chat.suggestionComplex": "Complex products",
+        "chat.suggestionHire": "Why hire Bruno?",
+        "chat.suggestionImpact": "Impact case",
+        "language.toggle": "Português",
+        "language.label": "Ver chat em português",
+      },
+      pt: {
+        "hero.kicker": "Guia do portfolio com IA",
+        "hero.title": "Converse com o portfolio do Bruno",
+        "chat.assistantName": "Assistente do Portfolio do Bruno",
+        "chat.initial":
+          "Oi, eu posso te ajudar a entender os projetos do Bruno, sua experiência e qual case combina melhor com o que você procura.",
+        "chat.placeholder": "Pergunte sobre o trabalho do Bruno",
+        "chat.ask": "Perguntar",
+        "chat.loading": "Organizando a melhor resposta...",
+        "chat.error":
+          "Não consegui responder agora. Tente novamente ou entre em contato com o Bruno para mais contexto.",
+        "chat.you": "Você",
+        "chat.suggestionStrategy": "UX Strategy",
+        "chat.suggestionComplex": "Produtos complexos",
+        "chat.suggestionHire": "Por que contratar?",
+        "chat.suggestionImpact": "Case com impacto",
+        "language.toggle": "English",
+        "language.label": "View chat in English",
+      },
+    };
+
+    function getCurrentLanguage() {
+      return localStorage.getItem("site-language") === "pt" ? "pt" : "en";
+    }
+
+    function translate(key) {
+      const language = getCurrentLanguage();
+      return translations[language]?.[key] ?? translations.en[key] ?? key;
+    }
+
+    function applyLanguage(language) {
+      const dictionary = translations[language] ?? translations.en;
+
+      document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (key && dictionary[key]) {
+          element.textContent = dictionary[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        if (key && dictionary[key]) {
+          element.setAttribute("placeholder", dictionary[key]);
+        }
+      });
+
+      heroChatSuggestions.forEach((button) => {
+        const suggestion = button.getAttribute(
+          language === "pt"
+            ? "data-chat-suggestion-pt"
+            : "data-chat-suggestion-en"
+        );
+
+        if (suggestion) {
+          button.setAttribute("data-chat-suggestion", suggestion);
+        }
+      });
+
+      if (languageToggle) {
+        languageToggle.textContent = dictionary["language.toggle"];
+        languageToggle.setAttribute("aria-label", dictionary["language.label"]);
+      }
+
+      localStorage.setItem("site-language", language);
+    }
+
+    function createAssistantShell({ loading = false } = {}) {
+      const row = document.createElement("div");
+      row.className = "hero-chat-response-row";
+
+      const avatar = document.createElement("div");
+      avatar.className = "hero-chat-avatar";
+      avatar.setAttribute("aria-hidden", "true");
+      avatar.innerHTML =
+        '<dotlottie-player src="/animations/orb.lottie" background="transparent" speed="1" loop autoplay></dotlottie-player>';
+
+      const response = document.createElement("article");
+      response.className = "hero-chat-response";
+      if (loading) response.classList.add("hero-chat-response-loading");
+
+      const heading = document.createElement("div");
+      heading.className = "hero-chat-response-heading";
+
+      const name = document.createElement("strong");
+      name.textContent = translate("chat.assistantName");
+      heading.appendChild(name);
+
+      const answer = document.createElement("p");
+      answer.textContent = loading ? translate("chat.loading") : "";
+
+      const cards = document.createElement("div");
+      cards.className = "hero-chat-projects";
+
+      const links = document.createElement("div");
+      links.className = "hero-chat-response-links";
+
+      response.append(heading, answer, cards, links);
+      row.append(avatar, response);
+
+      return { row, response, answer, cards, links };
+    }
+
+    function appendUserMessage(question) {
+      if (!heroChatHistory) return;
+
+      const row = document.createElement("div");
+      row.className = "hero-chat-user-row";
+
+      const bubble = document.createElement("article");
+      bubble.className = "hero-chat-user-message";
+
+      const heading = document.createElement("strong");
+      heading.textContent = translate("chat.you");
+
+      const text = document.createElement("p");
+      text.textContent = question;
+
+      bubble.append(heading, text);
+      row.appendChild(bubble);
+      heroChatHistory.appendChild(row);
+    }
+
+    function setChatLoading() {
+      if (!heroChatHistory) return null;
+
+      const shell = createAssistantShell({ loading: true });
+      heroChatHistory.appendChild(shell.row);
+      shell.row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+
+      heroChatSubmit?.setAttribute("disabled", "");
+      heroChatSuggestions.forEach((button) => {
+        button.setAttribute("disabled", "");
+      });
+
+      return shell;
+    }
+
+    function renderProjectCards(cardsContainer, links = []) {
+      cardsContainer.replaceChildren();
+
+      links.forEach((link) => {
+        const preview = projectPreviews[link.href];
+        if (!preview) return;
+
+        const card = document.createElement("a");
+        card.className = "hero-chat-project-card";
+        card.href = link.href;
+
+        const image = document.createElement("img");
+        image.src = preview.image;
+        image.alt = "";
+        image.loading = "lazy";
+
+        const content = document.createElement("span");
+
+        const title = document.createElement("strong");
+        title.textContent = preview.title;
+
+        const category = document.createElement("span");
+        category.textContent = preview.category;
+
+        content.append(title, category);
+        card.append(image, content);
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    function renderChatAnswer(shell, response) {
+      if (!shell) return;
+
+      shell.answer.textContent = response.answer;
+      shell.links.replaceChildren();
+      renderProjectCards(shell.cards, response.links);
+
+      response.links?.forEach((link) => {
+        const element = document.createElement("a");
+        element.className = "hero-chat-response-link";
+        element.textContent = link.label;
+        element.href = link.href;
+
+        if (link.href?.startsWith("http")) {
+          element.target = "_blank";
+          element.rel = "noreferrer";
+        }
+
+        shell.links.appendChild(element);
+      });
+
+      shell.response.classList.remove("hero-chat-response-loading");
+      heroChatSubmit?.removeAttribute("disabled");
+      heroChatSuggestions.forEach((button) => {
+        button.removeAttribute("disabled");
+      });
+    }
+
+    function renderChatError(shell, message) {
+      renderChatAnswer(shell, {
+        answer: message || translate("chat.error"),
+        links: [
+          { label: "Email Bruno", href: "mailto:contact@brunoux.com" },
+          { label: "View work", href: "/#projects" },
+        ],
+      });
+    }
+
+    async function showChatAnswer(question) {
+      heroOrb?.classList.add("hero-orb-hidden");
+      heroChatIntro?.classList.add("hero-chat-intro-hidden");
+      appendUserMessage(question);
+      const shell = setChatLoading();
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: question }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          renderChatError(shell, errorData?.error);
+          return;
+        }
+
+        const data = await response.json();
+        renderChatAnswer(shell, data);
+      } catch (error) {
+        console.error("Portfolio assistant error", error);
+        renderChatError(shell);
+      }
+    }
+
+    const savedLanguage = localStorage.getItem("site-language") || "en";
+    applyLanguage(savedLanguage);
+
+    languageToggle?.addEventListener("click", () => {
+      const currentLanguage =
+        localStorage.getItem("site-language") === "pt" ? "pt" : "en";
+      applyLanguage(currentLanguage === "pt" ? "en" : "pt");
+    });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        languageToggle?.classList.toggle(
+          "language-toggle-hidden",
+          window.scrollY >= 24
+        );
+      },
+      { passive: true }
+    );
+
+    heroChatForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const question = heroChatInput?.value.trim();
+      if (question) {
+        heroChatInput.value = "";
+        showChatAnswer(question);
+      }
+    });
+
+    heroChatSuggestions.forEach((button) => {
+      button.addEventListener("click", () => {
+        const question = button.getAttribute("data-chat-suggestion");
+        if (!question) return;
+        showChatAnswer(question);
+      });
+    });
+  </script>
+</BaseLayout>

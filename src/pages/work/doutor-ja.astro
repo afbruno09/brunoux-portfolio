@@ -1,0 +1,217 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Doutor Já — Carteira Saúde",
+  client: "Doutor Já",
+  year: "2019 (May–Nov)",
+  role: "Sole UX Designer",
+  platform: "Mobile app + web",
+  accentColor: "#1877c9",
+  heroEyebrow: "Earlier project · 2019",
+  heroImageMaxWidth: "640px",
+  hideOverview: true,
+  summary:
+    "An appointment-booking product connecting affordable clinics to people without health insurance — designed to be sold by employers to their own staff as a flexible alternative to a traditional health plan.",
+
+  heroImage: "/images/projects/doutor-ja/hero-real-opt.jpg",
+  heroAlt: "Doutor Já product screens — Carteira Saúde app and booking flow",
+
+  challenge: [
+    "Most Brazilians have no health plan, but employers were a channel nobody had designed for — the pitch and the booking flow weren't built around them.",
+    "As the sole UX Designer, I ran field interviews and shaped both the research direction and the booking flow it led to.",
+  ],
+
+  solution: [
+    "Four field interviews at a real client site — a supermarket offering Doutor Já as an employee benefit — fed directly into personas and a journey map, which pointed at the booking flow as the place to redesign.",
+    "The redesigned flow leads with the three things people actually needed to decide: which clinic, at what price, and when. That reframing toward an employer-sponsored benefit was carried into the commercial pitch.",
+  ],
+
+  sections: [
+    {
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Problem",
+          body: "Neither the pitch nor the booking flow was built around employers as a sales channel.",
+        },
+        {
+          title: "Role",
+          body: "Sole UX Designer — ran field interviews and shaped both the research direction and the booking flow it led to.",
+        },
+        {
+          title: "What changed",
+          bullets: [
+            "4 field interviews reframed the pitch toward an employer-sponsored benefit",
+            "Journey map exposed where users dropped off (SMS, automated support, unclear site)",
+            "Booking flow redesigned around price/time/location, the info that mattered most",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "The employer-benefit reframing was incorporated into the commercial pitch.",
+        },
+      ],
+    },
+
+    {
+      id: "research",
+      kind: "stats",
+      eyebrow: "Research",
+      title: "Starting from why people avoid a health plan in the first place",
+      content: [
+        "Before touching the booking flow, I looked at why this category of product struggles: most Brazilians don't have a health plan, but the ones who do treat it as something to protect at almost any cost. That gap between want and access is where an employer-sponsored benefit made sense.",
+      ],
+      stats: [
+        { value: "71%", label: "of the Brazilian population has no health plan" },
+        { value: "83%", label: "of Brazilians value, want, or fear losing the benefit" },
+        { value: "70%", label: "of employees rank a health plan as a top-priority benefit" },
+      ],
+    },
+
+    {
+      id: "field-interviews",
+      layout: "image-first",
+      eyebrow: "Field interviews",
+      title: "Talking to the people an employer benefit actually reaches",
+      content: [
+        "I visited Super Rede, a supermarket chain that offered Doutor Já as a benefit to its own staff, and interviewed 4 people there — the owner who buys the benefit, and the employees who would (or wouldn't) use it. Those conversations became the personas above.",
+      ],
+      images: [
+        {
+          src: "/images/projects/doutor-ja/super-rede-opt.jpg",
+          alt: "Super Rede — the supermarket where the field interviews happened",
+          caption: "Super Rede — the supermarket where the interviews happened",
+        },
+        {
+          src: "/images/projects/doutor-ja/personas-opt.jpg",
+          alt: "Three personas built from the field interviews: owner, cashier, manager",
+          caption: "Personas built from the 4 interviews: owner, cashier, manager",
+        },
+      ],
+      bullets: [
+        "The market owner ('Andrei') offers the benefit but never used it himself",
+        "The cashier ('Wander') finds doctors complicated",
+        "The manager ('Juliana') already takes care of her own health and uses it for her son",
+      ],
+    },
+
+    {
+      id: "journey",
+      kind: "journey",
+      eyebrow: "Key decision",
+      title: "Mapping the journey to find where people actually got stuck",
+      content: [
+        "The interviews fed into a journey map across five stages — Discover → Start → Use → Deepen → Leave — tracking real drop-off points: SMS with too little information, an automated support flow nobody understood, a site that was confusing without context.",
+        "That map, not a guess, is what pointed at the booking flow as the place to redesign.",
+      ],
+      journeyStages: [
+        {
+          stage: "Discover",
+          description:
+            "Little information, low credibility on the first contact (SMS/ad).",
+        },
+        {
+          stage: "Start",
+          description: "Doesn't understand the automated support or the site.",
+        },
+        {
+          stage: "Use",
+          description:
+            "Can't find the clinic, the specialty, or their own benefit card.",
+        },
+        {
+          stage: "Deepen",
+          description:
+            "Specialist doesn't respond; clinic doesn't apply the agreed discount.",
+        },
+        {
+          stage: "Leave",
+          description:
+            "Stops paying for something they don't use — the benefit's churn point.",
+        },
+      ],
+    },
+
+    {
+      id: "solution-flow",
+      kind: "flow",
+      eyebrow: "Solution",
+      title: "A booking flow built around price, time and location",
+      content: [
+        "The redesigned flow leads with the three things the journey map showed people actually needed to decide: which clinic, at what price, and when. A help popup appears if the user stalls on a step — a direct response to the \"doesn't understand the automated flow\" pain point from the journey map.",
+      ],
+      flowIntro: {
+        image: {
+          src: "/images/projects/doutor-ja/desktop-search.jpg",
+          alt: "Desktop search ordered by price, distance and ease of booking",
+        },
+        caption: "Step 0 — desktop search",
+      },
+      imageMaxWidth: "380px",
+      flowLabel: "Then, on mobile",
+      flowSteps: [
+        {
+          image: {
+            src: "/images/projects/doutor-ja/clinic-detail.jpg",
+            alt: "Clinic detail screen showing specialties and price",
+          },
+          caption: "Clinic detail, price up front",
+        },
+        {
+          image: {
+            src: "/images/projects/doutor-ja/schedule.jpg",
+            alt: "Integrated schedule showing real available time slots",
+          },
+          caption: "Integrated schedule, real time slots",
+        },
+        {
+          image: {
+            src: "/images/projects/doutor-ja/appointment-status.jpg",
+            alt: "Appointment status screen — confirm, reschedule, cancel",
+          },
+          caption: "Confirm, reschedule or cancel",
+        },
+      ],
+    },
+
+    {
+      id: "landing",
+      eyebrow: "Landing",
+      title: "Selling the benefit before anyone books anything",
+      content: [
+        "The landing page had to speak to two audiences at once — the employer deciding to offer it, and the employee deciding to use it — before either one reaches the booking flow.",
+      ],
+      image: {
+        src: "/images/projects/doutor-ja/landing-mobile.jpg",
+        alt: "Doutor Já landing page on mobile",
+      },
+      imageMaxWidth: "220px",
+    },
+
+    {
+      id: "outcome",
+      eyebrow: "Outcome",
+      title: "A research-driven reframing, not just new screens",
+      content: [
+        "The main result wasn't a shipped feature — it was a shift in the product's own pitch. The interviews at Super Rede surfaced the employer-sponsored angle, and that reframing was carried into the commercial pitch alongside the redesigned booking flow.",
+      ],
+      bullets: [
+        "4 field interviews at a real client site, feeding directly into personas and a journey map",
+        "Booking flow redesigned from journey-map pain points, not from a generic best-practice list",
+        "Reframing toward an employer-sponsored benefit incorporated into the commercial pitch",
+      ],
+      layout: "text-first",
+    },
+  ],
+
+  nextProject: {
+    title: "Canguru",
+    href: "/work/canguru",
+  },
+};
+---
+
+<ProjectCase project={project} />

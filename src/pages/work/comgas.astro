@@ -1,74 +1,109 @@
 ---
 import ProjectCase from "../../layouts/ProjectCase.astro";
 
+const figmaFileUrl =
+  "https://www.figma.com/design/fDDMxTuLowUBqhodkOqYDU/An%C3%A1lise-de-Risco-App?node-id=380-8093";
+
 const project = {
   title: "Comgás Field Safety App",
   client: "Comgás",
-  year: "2024",
+  year: "2024–2025",
   role: "Product Designer",
   platform: "Mobile app + web dashboard",
   summary:
     "A digital safety workflow designed to replace paper-based field forms, helping technicians document operational risks and enabling office teams to review evidence with more clarity.",
 
-  heroImage: "/images/comgas/cover.jpg",
+  heroImage: "/images/comgas/cover-opt.jpg",
   heroAlt: "Comgás field safety app case study cover",
+  hideOverview: true,
 
   challenge: [
-    "Field technicians relied on manual processes to register operational risks, document evidence, and report safety conditions during field activities.",
-    "The challenge was to transform a paper-based workflow into a digital experience that worked well in real field conditions while keeping the process clear for both technicians and office teams.",
+    "Field technicians relied on paper forms to register risks — slow, hard to review, easy to lose.",
   ],
 
-  solution: [
-    "I designed a mobile-first workflow for field technicians to identify risks, capture photos or videos, and submit structured evidence directly from the operation site.",
-    "The solution also included a web dashboard concept for office teams to review submissions, track documentation, and support safer decision-making across operations.",
-  ],
-
-  metadata: [
-    { label: "Scope", value: "UX/UI + Field Research" },
-    { label: "Context", value: "Energy and field operations" },
-    { label: "Users", value: "Technicians and office managers" },
-    { label: "Output", value: "Mobile app and dashboard prototype" },
-  ],
+  solution: [],
 
   sections: [
     {
-      id: "overview",
-      eyebrow: "Overview",
-      title: "Digitizing a safety-critical field workflow",
-      content: [
-        "The project focused on improving how field teams register and communicate risks during operational activities.",
-        "Instead of relying on paper forms and fragmented documentation, the proposed experience created a more structured way to capture information, evidence, and status updates.",
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Problem",
+          body: "Field technicians relied on paper forms to register risks — slow, hard to review, easy to lose.",
+        },
+        {
+          title: "Role",
+          body: "UX/UI + field research — visited operations sites to see the paper workflow firsthand.",
+        },
+        {
+          title: "What changed",
+          bullets: [
+            "Paper checklist became a guided mobile flow",
+            "Photo/video evidence attached directly on site",
+            "Office dashboard for review, not another spreadsheet",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "Working mobile + dashboard prototype, tested against the real paper-form workflow.",
+        },
       ],
-      image: {
-        src: "/images/comgas/overview.jpg",
-        alt: "Overview of the Comgás field safety app interface",
-      },
     },
 
     {
-      id: "field-context",
-      eyebrow: "Field context",
-      title: "Designing for real operational conditions",
+      id: "field-research",
+      eyebrow: "Field research",
+      title: "Starting from the paper forms technicians actually use",
+      layout: "text-first",
+      imageColumns: 3,
       content: [
-        "The experience needed to work for technicians in the field, where time, context, and clarity matter more than visual complexity.",
-        "This required a practical mobile-first interface with clear steps, direct actions, and low cognitive load during risk registration.",
+        "Before any screen, I went to a Comgás field site to see the process end to end — the printed \"PT\" (permissão de trabalho) form technicians fill by hand, and the risk-analysis checklist used before starting a task. Digitizing without seeing this would have missed how much of it happens standing up, outdoors, under time pressure.",
       ],
-      image: {
-        src: "/images/comgas/field-context.jpg",
-        alt: "Field context and technician workflow for the Comgás project",
-      },
+      images: [
+        {
+          src: "/images/comgas/paper-pt-form.png",
+          alt: "Printed work permit form for work at height, filled by hand in the field",
+          caption: "Paper PT form — handwritten in the field",
+        },
+        {
+          src: "/images/comgas/risk-checklist-opt.jpg",
+          alt: "Printed Comgás risk-analysis checklist",
+          caption: "Printed risk-analysis checklist",
+        },
+        {
+          src: "/images/comgas/field-visit-opt.jpg",
+          alt: "Comgás field crew on site with a pipe-testing warning sign",
+          caption: "On-site field visit",
+        },
+      ],
+    },
+
+    {
+      id: "prototype",
+      kind: "embed",
+      eyebrow: "Evidence — live prototype",
+      title: "The real Figma file — flows, components, delivery",
+      content: [
+        "Embedding the actual \"Análise de Risco App\" file instead of another static summary — the full risk-analysis flow, the work-at-height flow, and the refined delivery components for EPIs.",
+      ],
+      embedUrl: `https://www.figma.com/embed?embed_host=share&url=${encodeURIComponent(figmaFileUrl)}`,
+      embedTitle: "Análise de Risco App — Figma prototype",
+      ctaHref: figmaFileUrl,
+      ctaLabel: "Open the Figma file ↗",
     },
 
     {
       id: "risk-registration",
       eyebrow: "Risk registration",
-      title: "Making risk identification easier and more structured",
+      title: "Turning the paper checklist into a guided flow",
+      layout: "text-first",
       content: [
-        "One of the core flows was the risk registration process. The interface guides technicians through selecting the type of risk, adding context, and documenting evidence.",
-        "The goal was to reduce ambiguity and make each submission easier to review later by the office team.",
+        "The interface walks technicians through the same questions as the paper form — type of activity, depth, location, risk level — one at a time, so nothing gets skipped under time pressure, and the office team gets a structured submission instead of a scanned sheet.",
       ],
       image: {
-        src: "/images/comgas/risk-registration.jpg",
+        src: "/images/comgas/risk-registration-opt.jpg",
         alt: "Risk registration flow in the Comgás mobile app",
       },
     },
@@ -76,42 +111,29 @@ const project = {
     {
       id: "evidence",
       eyebrow: "Evidence capture",
-      title: "Connecting photos, videos, and field information",
+      title: "Connecting photos and field information",
+      layout: "text-first",
       content: [
-        "Evidence capture was a key part of the workflow. The app allows technicians to attach visual records to support the reported risk.",
-        "This helped create a more reliable link between what happened in the field and what the office team needed to analyze.",
+        "Technicians attach photo or video evidence directly to the risk submission — creating a reliable link between what happened in the field and what the office team reviews, instead of a paper form with no visual record.",
       ],
       image: {
-        src: "/images/comgas/evidence.jpg",
+        src: "/images/comgas/evidence-opt.jpg",
         alt: "Evidence capture screens with photos and videos",
       },
+      imageMaxWidth: "900px",
     },
 
     {
       id: "dashboard",
       eyebrow: "Web dashboard",
-      title: "Supporting review and decision-making from the office",
+      title: "Supporting review from the office",
+      layout: "text-first",
       content: [
-        "The web dashboard was designed to help managers review field submissions with more context and consistency.",
-        "It brings together submitted reports, evidence, status, location, and operational information in a clearer review environment.",
+        "The dashboard concept brings submitted reports, evidence, status, location and operational data together for managers — replacing scattered paper and spreadsheets with one review environment.",
       ],
       image: {
-        src: "/images/comgas/dashboard.jpg",
+        src: "/images/comgas/dashboard-opt.jpg",
         alt: "Comgás web dashboard for reviewing field safety reports",
-      },
-    },
-
-    {
-      id: "flow",
-      eyebrow: "End-to-end flow",
-      title: "From field registration to office review",
-      content: [
-        "The solution connects the technician’s field workflow with the office team’s review process.",
-        "This end-to-end view helped clarify responsibilities, information flow, and the relationship between mobile input and web-based analysis.",
-      ],
-      image: {
-        src: "/images/comgas/flow.jpg",
-        alt: "End-to-end flow connecting mobile app and web dashboard",
       },
     },
 
@@ -119,34 +141,35 @@ const project = {
       id: "mobile",
       eyebrow: "Mobile-first design",
       title: "A compact interface for fast field use",
+      layout: "text-first",
       content: [
-        "The mobile experience was designed to prioritize speed, clarity, and direct interaction.",
-        "Screens were kept focused, with short forms, clear labels, and visible progress to help technicians complete the process without unnecessary friction.",
+        "Screens stay focused — short forms, clear labels, visible progress — so a technician can complete the process outdoors without unnecessary friction.",
       ],
       image: {
-        src: "/images/comgas/mobile.jpg",
+        src: "/images/comgas/mobile-opt.jpg",
         alt: "Mobile screens of the Comgás field safety app",
       },
     },
 
     {
       id: "outcome",
+      kind: "checklist",
       eyebrow: "Outcome",
-      title: "A clearer operational safety experience",
+      title: "A clearer operational safety workflow",
       content: [
-        "The prototype helped translate a complex field documentation process into a more usable digital workflow.",
-        "It created a stronger bridge between technicians and office teams, improving how operational risks could be documented, reviewed, and acted upon.",
+        "The prototype translated a paper-based field documentation process into a structured digital workflow, connecting technicians and office teams around the same submission — from the handwritten form to a reviewable record.",
       ],
-      image: {
-        src: "/images/comgas/final.jpg",
-        alt: "Final visual presentation of the Comgás case study",
-      },
+      checklistItems: [
+        "Prototype built end-to-end: mobile risk flow + web dashboard concept",
+        "Grounded in a real field visit and the actual paper forms in use",
+        "Structured submission replaces a scanned, handwritten sheet",
+      ],
     },
   ],
 
   nextProject: {
-    title: "Canguru",
-    href: "/work/canguru",
+    title: "Doutor Já",
+    href: "/work/doutor-ja",
   },
 };
 ---

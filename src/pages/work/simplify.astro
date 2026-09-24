@@ -1,0 +1,150 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Simplify",
+  client: "Startup Weekend Palhoça",
+  year: "2016–2017 (8 months)",
+  role: "Designer (the team's only one)",
+  platform: "Wi-Fi login on the web",
+  accentColor: "#B8436B",
+  summary:
+    "A Wi-Fi login that swaps the password for a three-question quiz. Built as an MVP in 48 hours at a Startup Weekend, where I was the only designer on a team of eight.",
+
+  heroImage: "/images/simplify/hero-telas.jpg",
+  heroAlt: "Four phones showing the Simplify flow: welcome, the first question, thank you, and a results chart for the establishment",
+  hideOverview: true,
+
+  challenge: [],
+  solution: [],
+
+  sections: [
+    {
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Context",
+          body: "The first Startup Weekend Palhoça, 2016: 48 hours to take an idea to a working product.",
+        },
+        {
+          title: "Role",
+          body: "The only designer on a team of eight — name, logo, research, prototypes and pitch.",
+        },
+        {
+          title: "What we built",
+          bullets: [
+            "A quiz that replaces the Wi-Fi password",
+            "Customer taste data for the venue owner",
+            "An MVP running on the event's own Wi-Fi",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "Third place and six months of mentoring. The project lasted eight months.",
+        },
+      ],
+    },
+
+    {
+      id: "origin",
+      eyebrow: "The weekend",
+      title: "One designer, seven teammates, 48 hours",
+      content: [
+        "At a Startup Weekend, participants pitch ideas and vote for the ones worth building. I voted for an idea I found viable and useful — then still called WiFeed — and ended the first night in its team: three people on the business side, four developers, and me as the only designer.",
+        "That meant owning everything visual and everything about the experience: the name Simplify, the logo, the research, the prototypes and the pitch deck.",
+      ],
+      image: {
+        src: "/images/simplify/evento-notebooks.jpg",
+        alt: "Laptops on a table during the Startup Weekend, one with code and one with the prototype in progress",
+      },
+    },
+
+    {
+      id: "problem",
+      eyebrow: "Problem",
+      title: "Two sides of the same Wi-Fi",
+      layout: "text-first",
+      content: [
+        "We framed the problem for both people involved in a café or bar's Wi-Fi:",
+      ],
+      bullets: [
+        "\"We want to simplify the way people access Wi-Fi networks every day.\"",
+        "\"We want a way to bring something back to owners who offer Wi-Fi.\"",
+      ],
+    },
+
+    {
+      id: "research",
+      eyebrow: "Research",
+      title: "Passwords were making people leave",
+      layout: "text-first",
+      content: [
+        "We turned our three hypotheses into a short form shared in local communities and social networks: is Wi-Fi relevant when choosing a place for a coffee? Have you had trouble connecting? Have you stopped connecting because of it?",
+        "Most people said yes to all three. Complicated passwords and busy staff were making customers give up on the Wi-Fi — and spend less time in the venue.",
+        "We also looked at the closest existing solution: Wi-Fi in exchange for a check-in on Facebook. The people we asked were not comfortable publishing their location just to get online. That was our opening.",
+      ],
+    },
+
+    {
+      id: "ideation",
+      eyebrow: "Ideation",
+      title: "As simple as it could possibly be",
+      layout: "text-first",
+      content: [
+        "We agreed on an extremely simple first version that could be validated as an MVP. I sketched it on paper as three screens, each with one job:",
+      ],
+      bullets: [
+        "Welcome — no text beyond explaining the process, and a clear sign of how many steps are left",
+        "Questions — editable by the venue owner, so each place asks what it wants to know",
+        "Thank you — and straight to the internet",
+      ],
+      image: {
+        src: "/images/simplify/sketches.jpg",
+        alt: "Three hand-drawn phone screens: welcome with a start button, a yes-or-no question, and a thank-you screen with a button to start browsing",
+        caption: "Paper wireframes",
+      },
+    },
+
+    {
+      id: "validation",
+      eyebrow: "Validation",
+      title: "From paper to a working MVP in one weekend",
+      layout: "text-first",
+      content: [
+        "I turned the sketches into a high-fidelity, animated prototype in Sketch and tested it with real users. Once it was validated, the developers built it — and we ran the first version on the Startup Weekend's own Wi-Fi network.",
+        "Behind the quiz, the owner gets the answers as data: the results screen shows, for example, customers' music preferences over time.",
+      ],
+      image: {
+        src: "/images/simplify/quadro-ideias.jpg",
+        alt: "A paper board covered with sticky notes, flows and ideas from the weekend",
+        caption: "The team's board during the weekend",
+      },
+      imageMaxWidth: "560px",
+    },
+
+    {
+      id: "outcome",
+      eyebrow: "Outcome",
+      title: "Third place, and eight months of trying",
+      content: [
+        "After 48 hours we pitched to the judges and won third place, with six months of mentoring as the prize.",
+        "Simplify stayed alive for eight months. We tried to sell it and to build a better experience, but it did not become a business. It was where I first designed a product end to end — from a vote on a Friday night to something real people used.",
+      ],
+      image: {
+        src: "/images/simplify/equipe-3-lugar.jpg",
+        alt: "The eight-person Simplify team at the Startup Weekend, with the Simplify logo and a third-place medal",
+        caption: "The team, third place",
+      },
+    },
+  ],
+
+  nextProject: {
+    title: "DUX",
+    href: "/work/dux",
+  },
+};
+---
+
+<ProjectCase project={project} />

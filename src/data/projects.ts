@@ -9,12 +9,12 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "world-bank-ministry-of-labor",
+    slug: "world-bank",
     title: "World Bank / Ministry of Labor (Brazil)",
     category: "Labor Market Intelligence Platform",
     summary:
       "Integrated prototype connecting occupations, courses and labor data.",
-    image: "/images/projects/world-bank/cover.jpg",
+    image: "/images/projects/world-bank/cover.png",
     featured: true,
   },
   {
@@ -40,8 +40,8 @@ export const projects: Project[] = [
     title: "DUX",
     category: "Web3 / Product Design",
     summary:
-      "Product design and digital execution in a fast-moving Web3 context.",
-    image: "/images/projects/dux/cover.jpg",
+      "Leading design at a Web3 startup: product map, research with players and brands, site and wallet.",
+    image: "/images/projects/dux/cover-real.jpg",
     featured: false,
   },
   {
@@ -49,8 +49,8 @@ export const projects: Project[] = [
     title: "Pet Mimo",
     category: "E-commerce / UX/UI Design",
     summary:
-      "E-commerce design and branding work focused on a clearer and more consistent shopping experience.",
-    image: "/images/projects/pet-mimo/cover.jpg",
+      "Taking my sister's pet store online, solo: brand, a Figma component library and a WooCommerce store.",
+    image: "/images/projects/pet-mimo/cover-real.jpg",
     featured: false,
   },
   {
@@ -58,17 +58,26 @@ export const projects: Project[] = [
     title: "Doutor Já",
     category: "Healthcare Platform",
     summary:
-      "Scheduling experience for accessible healthcare services.",
-    image: "/images/projects/doutor-ja/cover.jpg",
-    featured: false,
+      "Field research and a redesigned booking flow that reframed an appointment app toward an employer-sponsored health benefit.",
+    image: "/images/projects/doutor-ja/hero-real-opt.jpg",
+    featured: true,
   },
   {
     slug: "blam",
     title: "Blam",
     category: "Jewelry Brand",
     summary:
-      "WordPress execution for a jewelry brand, balancing visual presentation and product showcase.",
-    image: "/images/projects/blam/cover.jpg",
+      "A WooCommerce store for a high-end 18k gold jewelry brand, built solo in three to four months and still live.",
+    image: "/images/projects/blam/cover-real.jpg",
+    featured: false,
+  },
+  {
+    slug: "gerador-de-simulados",
+    title: "Gerador de Simulados",
+    category: "AI Product / Independent",
+    summary:
+      "An AI practice-exam generator for medical residency, designed and built solo to learn APIs, databases, Google login and payments.",
+    image: "/images/projects/gerador-de-simulados/cover-real.jpg",
     featured: false,
   },
   {
@@ -76,8 +85,8 @@ export const projects: Project[] = [
     title: "Simplify",
     category: "Branding / Digital Product",
     summary:
-      "Visual identity and interface work for a digital quiz-based Wi-Fi login experience.",
-    image: "/images/projects/simplify/cover.jpg",
+      "A Wi-Fi login that swaps the password for a quiz. Third place at Startup Weekend, as the team's only designer.",
+    image: "/images/projects/simplify/cover-real.jpg",
     featured: false,
   },
 ];

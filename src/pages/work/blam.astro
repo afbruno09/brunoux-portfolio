@@ -1,0 +1,149 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Blam Fine Jewelry",
+  client: "Blam Joias",
+  year: "2024",
+  role: "WordPress e-commerce (solo)",
+  platform: "WordPress + WooCommerce + Elementor",
+  accentColor: "#5F7268",
+  heroTone: "accent" as const,
+  summary:
+    "Building the online store for Blam, a high-end 18k gold jewelry brand: I took the brand as it came and turned it into a WooCommerce store, on my own, in three to four months.",
+
+  heroImage: "/images/blam/home.jpg",
+  heroAlt: "Blam home page: serif wordmark, spaced-out navigation and a campaign photo of a woman wearing gold jewelry",
+  hideOverview: true,
+
+  challenge: [],
+  solution: [],
+
+  sections: [
+    {
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Context",
+          body: "Blam is a 100% online fine-jewelry brand founded by jewelry designer Larissa Marchese, and it needed an online store.",
+        },
+        {
+          title: "Role",
+          body: "WordPress e-commerce, solo. The brand identity came from the client.",
+        },
+        {
+          title: "What I built",
+          bullets: [
+            "WooCommerce catalog by collection and category",
+            "Product pages with installments and delivery times",
+            "Mercado Pago checkout and Correios shipping",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "Launched in 2024 after three to four months, then handed over. Still live.",
+        },
+      ],
+    },
+
+    {
+      id: "brand",
+      kind: "brand",
+      eyebrow: "The brand I received",
+      title: "A quiet brand for expensive pieces",
+      content: [
+        "The identity came from the client: a high-contrast serif wordmark, sage and neutral tones, Maven Pro and Inter. The store had to carry it without adding noise — some pieces sell for more than R$ 19,000.",
+      ],
+      brandLogos: [
+        {
+          src: "/images/blam/logo.webp",
+          alt: "Blam Fine Jewelry logo: serif wordmark with FINE JEWELRY underneath",
+          background: "#FFFFFF",
+        },
+        {
+          src: "/images/blam/logo.webp",
+          alt: "Blam logo on the brand's sage green",
+          background: "#899C92",
+        },
+      ],
+      brandColors: [
+        { name: "Sage", hex: "#899C92" },
+        { name: "Grey", hex: "#7A7A7A" },
+        { name: "Black", hex: "#000000" },
+      ],
+      brandFonts: [
+        { role: "Headings", family: "Maven Pro", sample: "Brinco Olímpia Flower" },
+        { role: "Text", family: "Inter", sample: "Brinco em ouro amarelo 18k. Acabamento fosco.", tone: "text" as const },
+      ],
+      brandFontsHref:
+        "https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Maven+Pro:wght@500&display=swap",
+    },
+
+    {
+      id: "product",
+      eyebrow: "Product page",
+      title: "The piece first, the price made reachable",
+      layout: "text-first",
+      content: [
+        "Each product page leads with a large photo and keeps the rest short: material and finish, delivery time, the price, and the same price split into ten interest-free installments.",
+      ],
+      image: {
+        src: "/images/blam/produto.jpg",
+        alt: "Brinco Olímpia Flower product page: large photo of the earring being worn, 18k gold description, R$ 5,850 or 10 installments of R$ 585",
+        caption: "Product page",
+      },
+    },
+
+    {
+      id: "catalog",
+      eyebrow: "Catalog",
+      title: "Collections and categories on white",
+      layout: "text-first",
+      content: [
+        "The catalog is organized by category — rings, earrings, necklaces, bracelets — and by collection, Gaia and Olímpia. Pieces sold on request show \"Sob consulta\" and lead to a conversation instead of the cart.",
+      ],
+      image: {
+        src: "/images/blam/categoria.jpg",
+        alt: "Earrings category page: eight earrings on white with prices, installments and sage green buttons",
+        caption: "Earrings category",
+      },
+      imageMaxWidth: "900px",
+    },
+
+    {
+      id: "build",
+      eyebrow: "Build",
+      title: "WooCommerce, Elementor and some code",
+      content: [
+        "The store runs on WordPress with WooCommerce and Elementor. Most of it was built in the page builder; where it fell short, I edited the code myself.",
+        "Payments go through Mercado Pago — credit and debit cards, boleto and PIX — and shipping is calculated automatically and sent insured by Correios Sedex.",
+      ],
+      image: {
+        src: "/images/blam/mobile-categoria.png",
+        alt: "Earrings category on mobile: two products per row with prices and installments",
+        caption: "Category on mobile",
+      },
+      imageMaxWidth: "300px",
+    },
+
+    {
+      id: "outcome",
+      eyebrow: "Outcome",
+      title: "Launched, handed over, still live",
+      layout: "text-first",
+      content: [
+        "The store launched in 2024, three to four months after I started, and I handed it over to the brand. It is still running at blamjoias.com.br.",
+      ],
+    },
+  ],
+
+  nextProject: {
+    title: "Pet Mimo",
+    href: "/work/pet-mimo",
+  },
+};
+---
+
+<ProjectCase project={project} />

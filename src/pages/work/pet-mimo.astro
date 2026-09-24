@@ -1,0 +1,168 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "Pet Mimo",
+  client: "My sister's pet store",
+  year: "2023",
+  role: "UX/UI Designer & builder (solo)",
+  platform: "WordPress + WooCommerce",
+  accentColor: "#8A51FC",
+  heroTone: "accent" as const,
+  summary:
+    "Taking my sister's pet store online: a learning project where I designed the brand, practiced components in Figma and built the WooCommerce store myself.",
+
+  heroImage: "/images/pet-mimo/hero-home-figma.jpg",
+  heroAlt: "Pet Mimo home page in Figma: header with search, and a Dia dos Pais banner with a man and his pug",
+  hideOverview: true,
+
+  challenge: [],
+  solution: [],
+
+  sections: [
+    {
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Context",
+          body: "My sister ran a physical pet store with no online presence.",
+        },
+        {
+          title: "Role",
+          body: "Everything, solo — my first e-commerce, learned by building it.",
+        },
+        {
+          title: "What I built",
+          bullets: [
+            "Name and visual identity",
+            "Figma component library with auto layout",
+            "WordPress + WooCommerce store",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "The store went live. It has since been taken offline.",
+        },
+      ],
+    },
+
+    {
+      id: "brand",
+      kind: "brand",
+      eyebrow: "Brand",
+      title: "Warm, a little funny, and purple",
+      content: [
+        "The store sells affectionate, funny products — mugs, totes and t-shirts that say \"Pai de pet\" or \"Mãe de vira-lata\". So the wordmark is heavy and rounded, with a paw print in place of the last O.",
+      ],
+      brandLogos: [
+        {
+          src: "/images/pet-mimo/logo-horizontal-branco.png",
+          alt: "Pet Mimo horizontal logo in white",
+          background: "#8A51FC",
+        },
+        {
+          src: "/images/pet-mimo/logo-empilhado.png",
+          alt: "Pet Mimo stacked logo in black with a paw print inside the O",
+          background: "#F1EAFF",
+        },
+      ],
+      brandColors: [
+        { name: "Mimo purple", hex: "#8A51FC" },
+        { name: "Grey", hex: "#54595F" },
+        { name: "Dark", hex: "#434242" },
+      ],
+      brandFonts: [
+        { role: "Highlights", family: "Akaya Telivigala", sample: "Frete grátis a partir de R$ 249" },
+        { role: "Navigation", family: "Akaya Kanadaka", sample: "Home · Loja · Contato" },
+        { role: "Text", family: "Poppins", sample: "Camisa – Pai de pet · R$ 69,90", tone: "text" as const },
+      ],
+      brandFontsHref:
+        "https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Akaya+Telivigala&family=Poppins:wght@400;500&display=swap",
+    },
+
+    {
+      id: "banners",
+      eyebrow: "Marketing",
+      title: "One system, from logo to product banners",
+      layout: "text-first",
+      bare: true,
+      content: [
+        "The same purple and the same voice carried into the category banners — Canecas, Bolsas, Roupas — built around the store's own products.",
+      ],
+      imageColumns: 3,
+      images: [
+        { src: "/images/pet-mimo/banner-canecas.jpg", alt: "Canecas banner with an Eu ♥ cachorro mug" },
+        { src: "/images/pet-mimo/banner-bolsas.jpg", alt: "Bolsas banner with a Mãe de vira-lata tote bag" },
+        { src: "/images/pet-mimo/banner-roupas.jpg", alt: "Roupas banner with a Mãe de bulldog t-shirt" },
+      ],
+    },
+
+    {
+      id: "component-library",
+      eyebrow: "Figma",
+      title: "A component library, built as practice",
+      layout: "text-first",
+      content: [
+        "I also used the project to show I could work the way product teams do: in components and auto layout, not loose screens. Every piece of the store became a component with its own variants and states — from buttons to the checkout steps.",
+      ],
+      images: [
+        {
+          src: "/images/pet-mimo/comp-botoes.png",
+          alt: "Button component set: primary, hover and secondary, each with and without a back-arrow icon",
+          caption: "Buttons — primary, hover, secondary, with icon",
+        },
+        {
+          src: "/images/pet-mimo/comp-passos.png",
+          alt: "Checkout progress component in four states, from step 1 to step 4 of 4",
+          caption: "Checkout steps — 1 to 4",
+        },
+        {
+          src: "/images/pet-mimo/comp-dropdown.png",
+          alt: "Size dropdown component, closed and open",
+          caption: "Dropdown — closed and open",
+        },
+        {
+          src: "/images/pet-mimo/comp-frete.png",
+          alt: "Shipping calculator component: empty postcode field, and the state with shipping options listed",
+          caption: "Shipping calculator — empty and calculated",
+        },
+      ],
+    },
+
+    {
+      id: "store",
+      eyebrow: "Build",
+      title: "Learning e-commerce by building one",
+      layout: "text-first",
+      content: [
+        "I had never built an online store, so I made it the way I could. I started from a WordPress theme, customized it to the brand with Elementor, and added WooCommerce for the cart, payment gateway, shipping and stock.",
+      ],
+      image: {
+        src: "/images/pet-mimo/figma-pagina-produto.jpg",
+        alt: "Product page for the Pai de pet t-shirt with size and color selectors, shipping calculator and buy button",
+        caption: "Product page — the components above, assembled",
+      },
+    },
+
+    {
+      id: "reflection",
+      eyebrow: "Reflection",
+      title: "What it taught me",
+      layout: "text-first",
+      content: [
+        "Pet Mimo went live and put my sister's store online; it has since been taken down.",
+        "Doing everything myself showed me the parts a designer rarely sees: payment gateways, shipping rules, stock that runs out. With what I know now, I would start where I skipped — talking to the customers who already walked into the physical store before designing the online one.",
+      ],
+    },
+  ],
+
+  nextProject: {
+    title: "Canguru",
+    href: "/work/canguru",
+  },
+};
+---
+
+<ProjectCase project={project} />

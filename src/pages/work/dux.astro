@@ -1,0 +1,230 @@
+---
+import ProjectCase from "../../layouts/ProjectCase.astro";
+
+const project = {
+  title: "DUX",
+  client: "DUX (WeareDUX)",
+  year: "2022",
+  role: "Lead Product Designer",
+  platform: "Web platform + wallet",
+  accentColor: "#2E2E2E",
+  summary:
+    "Leading design at a Web3 startup: researching two audiences, players and brands, and designing the WeareDUX platform, its site and wallet, with a team of two designers.",
+
+  heroImage: "/images/dux/hero-institucional.jpg",
+  heroAlt: "WeareDUX main landing page: DUX: As oportunidades do futuro para os desafios de agora, with a wireframe globe and the DUX logo",
+  hideOverview: true,
+
+  challenge: [],
+  solution: [],
+
+  sections: [
+    {
+      id: "scan",
+      kind: "scan",
+      eyebrow: "30-second read",
+      scanItems: [
+        {
+          title: "Context",
+          body: "DUX was a young Web3 company in Brazil with many product ideas, launching its own crypto token.",
+        },
+        {
+          title: "Role",
+          body: "Lead Product Designer, leading a UX/UI designer and a copy/UX writer.",
+        },
+        {
+          title: "What I did",
+          bullets: [
+            "Mapped and prioritized the product ideas",
+            "Research and personas with real people",
+            "Site, sign-up flow and wallet in Figma",
+          ],
+        },
+        {
+          title: "Outcome",
+          body: "The main site went live in 2022. The platform MVP was designed and prototyped.",
+        },
+      ],
+    },
+
+    {
+      id: "product-map",
+      eyebrow: "Product strategy",
+      title: "Seven ideas, one map",
+      layout: "text-first",
+      content: [
+        "When I joined, DUX had more product ideas than people to build them. I put them in a single product map, and for each one defined what it offered the user, what it offered DUX, its success indicators, its MVP, its requirements and its priority.",
+      ],
+      bullets: [
+        "Launchpad — decentralized fundraising for curated projects",
+        "Broker — a non-custodial bridge between crypto and fiat",
+        "Performance — a toolkit for players who manage other players",
+        "Liquidity mining — rewards for providing liquidity to the DUX token",
+        "Staking — locking tokens for rewards, creating scarcity",
+        "Treasury management — one view of a user's crypto assets",
+        "Metaverse experiences — immersive campaigns for artists and brands",
+      ],
+    },
+
+    {
+      id: "research",
+      eyebrow: "Research",
+      title: "Two audiences, researched with real people",
+      layout: "text-first",
+      content: [
+        "The platform had to serve two sides at once: people looking for extra income through games, surveys and campaigns, and crypto companies looking for an engaged audience in Latin America. The personas came from conversations with real people on both sides.",
+      ],
+      images: [
+        {
+          src: "/images/dux/persona-hugo.jpg",
+          alt: "Persona Hugo: works at a snack bar, likes games but can't afford them, earns R$ 1,400 a month, wants extra income for his son",
+          caption: "Hugo — the player",
+        },
+        {
+          src: "/images/dux/persona-genopets.jpg",
+          alt: "Persona Genopets: crypto game company that wants to enter Latin America, rewards its players, lacks marketing and has a large but disengaged community",
+          caption: "Genopets — the brand",
+        },
+      ],
+    },
+
+    {
+      id: "journeys",
+      kind: "journey-map",
+      eyebrow: "Journeys",
+      title: "Where each side finds value",
+      content: [
+        "Mapping both journeys made the priority clear. For the player, the moment that matters is seeing the money arrive in their bank account. For the brand, it is reaching new users and awareness in Latin America. Those two moments became the core of the first version.",
+      ],
+      keyLabel: "Moment of value",
+      journeyFlows: [
+        {
+          name: "Hugo",
+          role: "Player",
+          steps: [
+            "Searches Google for \"how to make money online\"",
+            "Finds the WeareDUX platform",
+            "Sees the opportunities the platform offers",
+            "Signs up",
+            "Starts completing tasks",
+            "Sees DUX coins arriving in his wallet",
+            "Converts his DUX coins to BRL",
+            { text: "Sends a PIX to his bank account", key: true },
+            "Comes back for more tasks",
+          ],
+        },
+        {
+          name: "Genopets",
+          role: "Brand",
+          steps: [
+            "Looks for partners to enter the Latin American market",
+            "Finds the WeareDUX platform",
+            "Fills out a form showing its interests",
+            "A DUX sales agent gets in touch",
+            "They agree on how the campaign's tasks and rewards will work",
+            "Pays DUX for the service and the rewards",
+            { text: "Gets access to a community interested in doing the tasks", key: true },
+          ],
+        },
+      ],
+    },
+
+    {
+      id: "paths",
+      eyebrow: "Site",
+      title: "One entry, two paths",
+      layout: "text-first",
+      content: [
+        "The main landing page asks one question — what kind of relationship do you want with DUX? — and splits visitors into players and companies. Each path then gets its own landing page, written for that audience.",
+      ],
+      image: {
+        src: "/images/dux/escolha-jornada.jpg",
+        alt: "Choose the first step of your journey: two cards, Jogador for players and Empresas for companies",
+      },
+    },
+
+    {
+      id: "landing-pages",
+      eyebrow: "Landing pages",
+      title: "Players earn, brands reach",
+      layout: "text-first",
+      bare: true,
+      images: [
+        {
+          src: "/images/dux/landing-players.jpg",
+          alt: "Players landing page: Venha desbloquear oportunidades, with an arcade machine and a play-to-earn carousel",
+          caption: "For players",
+        },
+        {
+          src: "/images/dux/landing-marcas.jpg",
+          alt: "Brands landing page: Sua comunidade merece experiências únicas, with isometric buildings and a metaverse section",
+          caption: "For brands",
+        },
+      ],
+    },
+
+    {
+      id: "account",
+      eyebrow: "Account",
+      title: "Sign-up with its errors designed",
+      layout: "text-first",
+      content: [
+        "Beyond the site, we designed the whole account flow: sign-up in three steps, error states, verification and password recovery.",
+      ],
+      images: [
+        {
+          src: "/images/dux/cadastro-erro.jpg",
+          alt: "Sign-up step 1 of 3 with inline errors for an invalid email and mismatched passwords",
+          caption: "Sign-up with error states",
+        },
+        {
+          src: "/images/dux/verificacao.jpg",
+          alt: "Account verification screen",
+          caption: "Verification",
+        },
+      ],
+    },
+
+    {
+      id: "wallet",
+      eyebrow: "Wallet",
+      title: "Rewards, balance and connected wallets",
+      layout: "text-first",
+      content: [
+        "The wallet is where the player's key moment happens: the balance from completed tasks, deposit and withdraw, a level that grows with activity, and connections to social accounts and crypto wallets.",
+      ],
+      imageColumns: 1,
+      images: [
+        {
+          src: "/images/dux/carteira-saldo.jpg",
+          alt: "Profile header with avatar, user level 1 progress bar, a $42 balance, and Depositar and Sacar buttons",
+          caption: "Balance and level",
+        },
+        {
+          src: "/images/dux/carteira-conexoes.jpg",
+          alt: "Connect accounts: Google connected, Twitter, Discord and Steam to connect; MetaMask connected, Solana, Parfin and Phantom to connect",
+          caption: "Connected accounts and wallets",
+        },
+      ],
+    },
+
+    {
+      id: "reflection",
+      eyebrow: "Reflection",
+      title: "The hardest part was the MVP",
+      layout: "text-first",
+      content: [
+        "The hardest part of the project was agreeing on an MVP the company was satisfied with, while showing the value of testing to improve the platform.",
+        "It taught me that an MVP can take too long to build, demand huge effort and drift away from what users actually need.",
+      ],
+    },
+  ],
+
+  nextProject: {
+    title: "Blam",
+    href: "/work/blam",
+  },
+};
+---
+
+<ProjectCase project={project} />

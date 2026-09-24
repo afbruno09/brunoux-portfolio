@@ -5,15 +5,56 @@ export interface ProjectSection {
   id: string;
   title: string;
   eyebrow?: string;
-  layout?: "image-first";
+  layout?: "image-first" | "text-first";
+  imageColumns?: 1 | 2 | 3;
+  imageAlign?: "center";
+  kind?: "stats" | "journey" | "flow" | "scan" | "embed" | "checklist" | "diagram" | "cards" | "brand" | "journey-map";
+  journeyFlows?: { name: string; role?: string; steps: (string | { text: string; key?: boolean })[] }[];
+  keyLabel?: string;
+  brandLogos?: { src: string; alt: string; background: string }[];
+  brandColors?: { name: string; hex: string }[];
+  brandFonts?: { role: string; family: string; sample: string; tone?: "text" }[];
+  bare?: boolean;
+  brandFontsHref?: string;
   content?: string[];
   bullets?: string[];
+  note?: string;
   youtubeUrl?: string;
+  embedUrl?: string;
+  embedTitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  checklistItems?: (string | { title: string; body?: string })[];
+  cards?: { title: string; body: string; image?: { src: string; alt: string } }[];
+  tags?: string[];
+  statsSource?: string;
+  diagramEyebrow?: string;
+  diagramTitle?: string;
+  diagramSubtitle?: string;
+  diagramCenter?: { title: string; subtitle?: string };
+  diagramNodes?: { title: string; body?: string }[];
+  diagramJourneyLabel?: string;
+  diagramJourneySteps?: string[];
   image?: {
     src: string;
     alt: string;
     caption?: string;
   };
+  imageMaxWidth?: string;
+  stats?: { value: string; label: string }[];
+  statsNote?: string;
+  scanItems?: { title: string; body?: string; bullets?: string[] }[];
+  journeyStages?: { stage: string; description: string }[];
+  flowIntro?: {
+    image: { src: string; alt: string };
+    caption?: string;
+  };
+  flowLabel?: string;
+  images?: { src: string; alt: string; caption?: string }[];
+  flowSteps?: {
+    image: { src: string; alt: string };
+    caption: string;
+  }[];
 }
 
 export interface ProjectData {
@@ -25,6 +66,11 @@ export interface ProjectData {
   summary: string;
   heroImage?: string;
   heroAlt?: string;
+  accentColor?: string;
+  heroEyebrow?: string;
+  heroTone?: "accent";
+  heroImageMaxWidth?: string;
+  hideOverview?: boolean;
   challenge: string[];
   solution: string[];
   metadata?: {
@@ -47,16 +93,28 @@ const projectNavigationLinks = navigationLinks.map((link) => {
 
   return link;
 });
+
+const allSections = project.sections ?? [];
+const scanSection = allSections.find((s) => s.kind === "scan");
+const bodySections = allSections.filter((s) => s.kind !== "scan");
+const brandFontsHref = allSections.find((s) => s.kind === "brand")?.brandFontsHref;
 ---
 
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{project.title} • Bruno Amorim</title>
     <meta name="description" content={project.summary} />
+    {brandFontsHref && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href={brandFontsHref} />
+      </>
+    )}
   </head>
-  <body>
+  <body style={project.accentColor ? `--accent: ${project.accentColor};` : undefined}>
     <header class="site-header">
       <div class="container header-inner">
         <a href="/" class="site-logo">Bruno Amorim</a>
@@ -134,16 +192,22 @@ const projectNavigationLinks = navigationLinks.map((link) => {
       </nav>
     </header>
 
-    <main class="project-page">
-      <section class="project-hero">
-      <section class="project-hero">
+    <main class="project-page" id="top">
+      <section class={`project-hero ${project.heroTone === "accent" ? "project-hero-accent" : ""}`}>
   <div class="container">
-    <p class="eyebrow">Case Study</p>
+    <p class="eyebrow">{project.heroEyebrow || "Case Study"}</p>
 
     <h1>{project.title}</h1>
 
     {project.heroImage && (
-      <figure class="hero-media">
+      <figure
+        class="hero-media"
+        style={
+          project.heroImageMaxWidth
+            ? `max-width:${project.heroImageMaxWidth}; margin-left:auto; margin-right:auto;`
+            : undefined
+        }
+      >
        <button
   class="image-trigger"
   type="button"
@@ -181,21 +245,48 @@ const projectNavigationLinks = navigationLinks.map((link) => {
   </div>
 </section>
 
-      <section class="project-overview">
-        <div class="container two-columns">
-          <article class="content-block">
-            <p class="section-label">Challenge</p>
-            <h2>Context and problem</h2>
-            {project.challenge.map((item) => <p>{item}</p>)}
-          </article>
+      {scanSection && (
+        <section class="project-section scan-section" id={scanSection.id}>
+          <div class="container">
+            {scanSection.eyebrow && (
+              <p class="section-label scan-label">{scanSection.eyebrow}</p>
+            )}
+            <div class="scan-grid">
+              {scanSection.scanItems?.map((item) => (
+                <div class="scan-item">
+                  <h4>{item.title}</h4>
+                  {item.body && <p>{item.body}</p>}
+                  {item.bullets && item.bullets.length > 0 && (
+                    <div class="scan-bullets">
+                      {item.bullets.map((bullet) => (
+                        <p><span class="scan-bullet-arrow" aria-hidden="true">→</span>{bullet}</p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-          <article class="content-block">
-            <p class="section-label">Solution</p>
-            <h2>Design approach</h2>
-            {project.solution.map((item) => <p>{item}</p>)}
-          </article>
-        </div>
-      </section>
+      {!project.hideOverview && (
+        <section class="project-overview">
+          <div class="container two-columns">
+            <article class="content-block">
+              <p class="section-label">Challenge</p>
+              <h2>Context and problem</h2>
+              {project.challenge.map((item) => <p>{item}</p>)}
+            </article>
+
+            <article class="content-block">
+              <p class="section-label">Solution</p>
+              <h2>Design approach</h2>
+              {project.solution.map((item) => <p>{item}</p>)}
+            </article>
+          </div>
+        </section>
+      )}
 
       {project.metadata && project.metadata.length > 0 && (
         <section class="project-facts">
@@ -212,9 +303,400 @@ const projectNavigationLinks = navigationLinks.map((link) => {
         </section>
       )}
 
-      {project.sections &&
-        project.sections.map((section) => (
-          <section class="project-section" id={section.id}>
+      {bodySections.length > 0 &&
+        bodySections.map((section) => {
+          if (section.kind === "stats") {
+            return (
+              <section class="project-section stats-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && (
+                    <p class="section-label stats-label">{section.eyebrow}</p>
+                  )}
+                  {section.title && <h2 class="stats-title">{section.title}</h2>}
+                  {section.content?.map((paragraph) => <p class="stats-intro">{paragraph}</p>)}
+                  <div class="stats-grid">
+                    {section.stats?.map((stat) => (
+                      <div class="stat-card">
+                        <strong class="stat-value">{stat.value}</strong>
+                        <span class="stat-label">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {section.statsSource && (
+                    <p class="stats-source">{section.statsSource}</p>
+                  )}
+                  {section.statsNote && (
+                    <p class="stats-note">{section.statsNote}</p>
+                  )}
+                  {section.image && (
+                    <figure
+                      class="section-media stats-media"
+                      style={
+                        section.imageMaxWidth
+                          ? `max-width:${section.imageMaxWidth};`
+                          : undefined
+                      }
+                    >
+                      <button
+                        class="image-trigger"
+                        type="button"
+                        data-lightbox-src={section.image.src}
+                        data-lightbox-alt={section.image.alt}
+                        aria-label="Open image"
+                      >
+                        <img src={section.image.src} alt={section.image.alt} />
+                      </button>
+                      {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
+                    </figure>
+                  )}
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "journey") {
+            return (
+              <section class="project-section journey-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  <h2>{section.title}</h2>
+
+                  <div class="section-copy-body journey-copy">
+                    {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+
+                  {section.journeyStages && section.journeyStages.length > 0 && (
+                    <div class="journey-grid">
+                      {section.journeyStages.map((item) => (
+                        <div class="journey-col">
+                          <h5>{item.stage}</h5>
+                          <p>{item.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "flow") {
+            return (
+              <section class="project-section flow-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  <h2>{section.title}</h2>
+
+                  <div class="section-copy-body">
+                    {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+
+                  {section.flowIntro && (
+                    <figure
+                      class="flow-intro-media"
+                      style={
+                        section.imageMaxWidth
+                          ? `max-width:${section.imageMaxWidth}; margin-left:auto; margin-right:auto;`
+                          : undefined
+                      }
+                    >
+                      <button
+                        class="image-trigger"
+                        type="button"
+                        data-lightbox-src={section.flowIntro.image.src}
+                        data-lightbox-alt={section.flowIntro.image.alt}
+                        aria-label="Open image"
+                      >
+                        <img
+                          src={section.flowIntro.image.src}
+                          alt={section.flowIntro.image.alt}
+                        />
+                      </button>
+                      {section.flowIntro.caption && (
+                        <figcaption>{section.flowIntro.caption}</figcaption>
+                      )}
+                    </figure>
+                  )}
+
+                  {section.flowLabel && (
+                    <p class="section-label flow-row-label">{section.flowLabel}</p>
+                  )}
+
+                  {section.flowSteps && section.flowSteps.length > 0 && (
+                    <div class="flow-row">
+                      {section.flowSteps.map((step, i) => (
+                        <>
+                          <figure class="flow-step">
+                            <span class="flow-step-index">{i + 1}</span>
+                            <button
+                              class="image-trigger"
+                              type="button"
+                              data-lightbox-src={step.image.src}
+                              data-lightbox-alt={step.image.alt}
+                              aria-label="Open image"
+                            >
+                              <img src={step.image.src} alt={step.image.alt} />
+                            </button>
+                            <figcaption>{step.caption}</figcaption>
+                          </figure>
+                          {i < (section.flowSteps?.length ?? 0) - 1 && (
+                            <span class="flow-arrow" aria-hidden="true">→</span>
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "embed") {
+            return (
+              <section class="project-section embed-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label embed-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+
+                  <div class="embed-box">
+                    {section.embedUrl ? (
+                      <iframe
+                        src={section.embedUrl}
+                        title={section.embedTitle || "Figma prototype"}
+                        allowfullscreen
+                        loading="lazy"
+                      ></iframe>
+                    ) : (
+                      <div class="embed-placeholder">
+                        <span>Figma preview</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {section.ctaHref && (
+                    <a
+                      class="button button-primary embed-cta"
+                      href={section.ctaHref}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {section.ctaLabel || "Open the Figma file ↗"}
+                    </a>
+                  )}
+
+                  {section.note && <p class="note-box">{section.note}</p>}
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "diagram") {
+            const nodes = section.diagramNodes ?? [];
+            const positions = ["tl", "tr", "bl", "br"];
+            return (
+              <section class="project-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  {section.content?.map((paragraph) => <p class="section-copy-body">{paragraph}</p>)}
+
+                  <div class="arch-card">
+                    {section.diagramEyebrow && <p class="arch-label">{section.diagramEyebrow}</p>}
+                    {section.diagramTitle && <h3 class="arch-title">{section.diagramTitle}</h3>}
+                    {section.diagramSubtitle && <p class="arch-subtitle">{section.diagramSubtitle}</p>}
+
+                    <div class="arch-diagram">
+                      <svg class="arch-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                        <line x1="18" y1="18" x2="50" y2="50" />
+                        <line x1="82" y1="18" x2="50" y2="50" />
+                        <line x1="18" y1="82" x2="50" y2="50" />
+                        <line x1="82" y1="82" x2="50" y2="50" />
+                      </svg>
+
+                      {nodes.map((node, i) => (
+                        <div class={`arch-node arch-node-${positions[i] || "tl"}`}>
+                          <h4>{node.title}</h4>
+                          {node.body && <p>{node.body}</p>}
+                        </div>
+                      ))}
+
+                      {section.diagramCenter && (
+                        <div class="arch-center">
+                          <strong>{section.diagramCenter.title}</strong>
+                          {section.diagramCenter.subtitle && <span>{section.diagramCenter.subtitle}</span>}
+                        </div>
+                      )}
+                    </div>
+
+                    {section.diagramJourneySteps && section.diagramJourneySteps.length > 0 && (
+                      <p class="arch-journey">
+                        {section.diagramJourneyLabel && <strong>{section.diagramJourneyLabel} </strong>}
+                        {section.diagramJourneySteps.map((step, i) => (
+                          <>
+                            <span>{step}</span>
+                            {i < (section.diagramJourneySteps?.length ?? 0) - 1 && (
+                              <span class="arch-journey-arrow" aria-hidden="true">→</span>
+                            )}
+                          </>
+                        ))}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "checklist") {
+            return (
+              <section class="project-section checklist-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  {section.content?.map((paragraph) => <p class="section-copy-body">{paragraph}</p>)}
+                  <div class="checklist-grid">
+                    {section.checklistItems?.map((item) => (
+                      <div class="check-card">
+                        <span class="check-mark" aria-hidden="true">✓</span>
+                        {typeof item === "string" ? (
+                          <p>{item}</p>
+                        ) : (
+                          <div class="check-copy">
+                            <p class="check-title">{item.title}</p>
+                            {item.body && <p class="check-body">{item.body}</p>}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "journey-map") {
+            return (
+              <section class="project-section journey-map-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  <div class="section-copy-body journey-map-copy">
+                    {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+                  {section.journeyFlows?.map((flow) => (
+                    <div class="journey-map">
+                      <h3 class="journey-map-name">
+                        {flow.name}
+                        {flow.role && <span>{flow.role}</span>}
+                      </h3>
+                      <ol class="journey-map-steps">
+                        {flow.steps.map((step) => {
+                          const item = typeof step === "string" ? { text: step, key: false } : step;
+                          return (
+                            <li class={`journey-map-step ${item.key ? "journey-map-step-key" : ""}`}>
+                              <p>{item.text}</p>
+                              {item.key && section.keyLabel && (
+                                <span class="journey-map-key-label">{section.keyLabel}</span>
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "brand") {
+            return (
+              <section class="project-section brand-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  <div class="section-copy-body brand-copy">
+                    {section.content?.map((paragraph) => <p>{paragraph}</p>)}
+                  </div>
+
+                  {section.brandLogos && section.brandLogos.length > 0 && (
+                    <div class="brand-logos">
+                      {section.brandLogos.map((logo) => (
+                        <div class="brand-logo-tile" style={`background:${logo.background};`}>
+                          <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div class="brand-specs">
+                    {section.brandColors && section.brandColors.length > 0 && (
+                      <ul class="brand-swatches" aria-label="Color palette">
+                        {section.brandColors.map((color) => (
+                          <li class="brand-swatch">
+                            <span class="brand-swatch-chip" style={`background:${color.hex};`}></span>
+                            <strong>{color.name}</strong>
+                            <code>{color.hex}</code>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {section.brandFonts && section.brandFonts.length > 0 && (
+                      <div class="brand-fonts">
+                        {section.brandFonts.map((font) => (
+                          <div class="brand-font">
+                            <p class="brand-font-meta">
+                              <span>{font.role}</span>
+                              <strong>{font.family}</strong>
+                            </p>
+                            <p class={`brand-font-sample ${font.tone === "text" ? "brand-font-sample-text" : ""}`} style={`font-family:'${font.family}', sans-serif;`}>
+                              {font.sample}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          if (section.kind === "cards") {
+            return (
+              <section class="project-section cards-section" id={section.id}>
+                <div class="container">
+                  {section.eyebrow && <p class="section-label">{section.eyebrow}</p>}
+                  {section.title && <h2>{section.title}</h2>}
+                  {section.content?.map((paragraph) => <p class="section-copy-body">{paragraph}</p>)}
+                  <div class="card-grid">
+                    {section.cards?.map((card) => (
+                      <div class="info-card">
+                        {card.image && (
+                          <button
+                            class="image-trigger info-card-media"
+                            type="button"
+                            data-lightbox-src={card.image.src}
+                            data-lightbox-alt={card.image.alt}
+                            aria-label="Open image"
+                          >
+                            <img src={card.image.src} alt={card.image.alt} />
+                          </button>
+                        )}
+                        <h4>{card.title}</h4>
+                        <p>{card.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          }
+
+          return (
+          <section class={`project-section ${section.bare ? "project-section-bare" : ""}`} id={section.id}>
             <div
               class={`container section-layout ${
                 section.youtubeUrl && !section.image ? "section-layout-video" : ""
@@ -222,7 +704,11 @@ const projectNavigationLinks = navigationLinks.map((link) => {
                 section.layout === "image-first"
                   ? "section-layout-image-first"
                   : ""
-              }`}
+              } ${
+                section.layout === "text-first"
+                  ? "section-layout-text-first"
+                  : ""
+              } ${section.imageAlign === "center" ? "section-layout-center" : ""}`}
             >
               <div class="section-copy">
                 <div class="section-copy-header">
@@ -240,6 +726,16 @@ const projectNavigationLinks = navigationLinks.map((link) => {
                       ))}
                     </ul>
                   )}
+
+                  {section.tags && section.tags.length > 0 && (
+                    <ul class="tag-row">
+                      {section.tags.map((tag) => (
+                        <li class="tag">{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {section.note && <p class="note-box">{section.note}</p>}
                 </div>
               </div>
 
@@ -256,7 +752,14 @@ const projectNavigationLinks = navigationLinks.map((link) => {
 )}
 
 {section.image && (
-  <figure class="section-media">
+  <figure
+    class="section-media"
+    style={
+      section.imageMaxWidth
+        ? `max-width:${section.imageMaxWidth}; margin-left:auto; margin-right:auto;`
+        : undefined
+    }
+  >
     <button
       class="image-trigger"
       type="button"
@@ -264,14 +767,34 @@ const projectNavigationLinks = navigationLinks.map((link) => {
       data-lightbox-alt={section.image.alt}
       aria-label="Open image"
     >
-      <img src={section.image.src} alt={section.image.alt} />
+      <img src={section.image.src} alt={section.image.alt} loading="lazy" decoding="async" />
     </button>
     {section.image.caption && <figcaption>{section.image.caption}</figcaption>}
   </figure>
 )}
+
+{section.images && section.images.length > 0 && (
+  <div class={`section-media-grid ${section.imageColumns === 3 ? "section-media-grid-3" : ""} ${section.imageColumns === 1 ? "section-media-grid-1" : ""}`}>
+    {section.images.map((img) => (
+      <figure class="section-media">
+        <button
+          class="image-trigger"
+          type="button"
+          data-lightbox-src={img.src}
+          data-lightbox-alt={img.alt}
+          aria-label="Open image"
+        >
+          <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
+        </button>
+        {img.caption && <figcaption>{img.caption}</figcaption>}
+      </figure>
+    ))}
+  </div>
+)}
             </div>
           </section>
-        ))}
+          );
+        })}
 
       <section class="project-cta">
         <div class="container cta-box">
@@ -280,13 +803,19 @@ const projectNavigationLinks = navigationLinks.map((link) => {
             <h2>Continue exploring</h2>
           </div>
 
-          {project.nextProject ? (
-            <a href={project.nextProject.href} class="button-link">
-              View next project
+          <div class="cta-actions">
+            {project.nextProject ? (
+              <a href={project.nextProject.href} class="button button-primary">
+                View next project
+              </a>
+            ) : (
+              <a href="/" class="button button-primary">Back to Home</a>
+            )}
+            <a href="#top" class="button button-secondary" data-back-to-top>
+              Back to top
             </a>
-          ) : (
-            <a href="/" class="button-link">Back to Home</a>
-          )}
+            <a href="/" class="button button-secondary">Back to main page</a>
+          </div>
         </div>
       </section>
 
@@ -616,6 +1145,12 @@ const projectNavigationLinks = navigationLinks.map((link) => {
     color: var(--muted);
   }
 
+  figcaption {
+    margin-top: 10px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
   h1,
   h2,
   p {
@@ -714,7 +1249,8 @@ const projectNavigationLinks = navigationLinks.map((link) => {
     order: 1;
   }
 
-  .section-layout-image-first .section-media {
+  .section-layout-image-first .section-media,
+  .section-layout-image-first .section-media-grid {
     order: 2;
   }
 
@@ -737,19 +1273,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-  }
-
-  .button-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 0 18px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
   }
 
   .button {
@@ -936,6 +1459,10 @@ const projectNavigationLinks = navigationLinks.map((link) => {
       align-items: start;
     }
 
+    .section-layout-center {
+      align-items: center;
+    }
+
     .section-layout-video {
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
       align-items: center;
@@ -947,7 +1474,6 @@ const projectNavigationLinks = navigationLinks.map((link) => {
 
     .section-layout-image-first .section-copy-header {
       max-width: 860px;
-      margin: 0 auto;
     }
 
     .section-layout-image-first .section-media {
@@ -955,9 +1481,20 @@ const projectNavigationLinks = navigationLinks.map((link) => {
       margin: 0 auto;
     }
 
+    .section-layout-image-first .section-media-grid {
+      width: 100%;
+    }
+
     .section-layout-image-first .section-copy-body {
       max-width: 860px;
-      margin: 0 auto;
+    }
+
+    .section-layout-text-first {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .section-layout-text-first .section-copy-body {
+      max-width: 860px;
     }
 
     .facts-grid,
@@ -975,6 +1512,13 @@ const projectNavigationLinks = navigationLinks.map((link) => {
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
   }
 
   .image-trigger {
@@ -1075,7 +1619,883 @@ body.lightbox-open {
   }
 }
 
+.stats-intro {
+  max-width: 780px;
+  color: var(--muted);
+}
 
+.stats-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-top: 16px;
+}
+
+.stat-card {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.stats-source {
+  margin: 16px 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.stats-media {
+  margin-top: 28px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag-row .tag {
+  margin: 0;
+  line-height: 1.2;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.info-card-media {
+  margin-bottom: 8px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-muted, #f1f1ea);
+}
+
+.info-card-media img {
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  object-fit: contain;
+}
+
+.note-box,
+.stats-note {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  color: #7a5200;
+  background: #fff6df;
+  border: 1px solid #ffe4a8;
+  border-radius: 10px;
+  padding: 14px 18px;
+  line-height: 1.55;
+  max-width: 780px;
+}
+
+.scan-section .container {
+  background: var(--accent);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.scan-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.scan-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.scan-item h4 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.scan-item p {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+.scan-bullets p {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.scan-bullet-arrow {
+  flex: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .scan-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .scan-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.journey-copy {
+  max-width: 780px;
+}
+
+.journey-grid {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.journey-col {
+  border-left: 2px solid var(--accent);
+  padding-left: 14px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  position: relative;
+}
+
+@media (min-width: 901px) {
+  .journey-col:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 0;
+    right: -21px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
+.journey-col h5 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.journey-col p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .journey-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.flow-intro-media {
+  margin: 20px auto 28px;
+}
+
+.flow-row-label {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.section-media-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 767px) {
+  .section-media-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-media-grid.section-media-grid-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.section-media-grid.section-media-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.section-media-grid-3 img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+}
+
+.brand-copy {
+  max-width: 780px;
+}
+
+.journey-map-copy {
+  max-width: 780px;
+}
+
+.journey-map {
+  margin-top: 36px;
+}
+
+.journey-map-name {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+}
+
+.journey-map-name span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.journey-map-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: journey-step;
+}
+
+.journey-map-steps > .journey-map-step {
+  margin: 0;
+}
+
+.journey-map-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 118px;
+  padding: 14px 16px 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--text);
+  border-radius: 6px;
+  box-shadow: 5px 5px 0 var(--journey-highlight, #f2ae1c);
+  counter-increment: journey-step;
+}
+
+.journey-map-step::before {
+  content: counter(journey-step, decimal-leading-zero);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.journey-map-step p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.journey-map-step-key {
+  background: var(--journey-highlight, #f2ae1c);
+  box-shadow: 5px 5px 0 var(--text);
+}
+
+.journey-map-step-key::before {
+  color: var(--text);
+}
+
+.journey-map-key-label {
+  margin-top: auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 600px) {
+  .journey-map-steps {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .journey-map-step {
+    min-height: 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .journey-map-key-label {
+    display: none;
+  }
+}
+
+.brand-font-sample.brand-font-sample-text {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.project-hero-accent .container {
+  background: var(--accent);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.project-hero-accent .eyebrow,
+.project-hero-accent .meta-grid span {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.project-hero-accent .lead {
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.project-hero-accent .meta-grid div {
+  background: rgba(0, 0, 0, 0.16);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.project-hero-accent .hero-media img {
+  box-shadow: 0 24px 60px rgba(40, 10, 110, 0.35);
+}
+
+.project-hero-accent + .scan-section .container {
+  background: var(--text);
+}
+
+.project-section-bare .container {
+  background: transparent;
+  border-color: transparent;
+}
+
+.brand-logos {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  margin-top: 32px;
+}
+
+.brand-logo-tile {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  padding: 48px;
+  border-radius: calc(var(--radius) - 4px);
+}
+
+.brand-logo-tile img {
+  width: 100%;
+  max-width: 420px;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.brand-specs {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  margin-top: 16px;
+}
+
+.brand-swatches {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-swatch {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.brand-swatch-chip {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+}
+
+.brand-swatch strong {
+  font-size: 0.95rem;
+}
+
+.brand-swatch code {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.brand-fonts {
+  display: grid;
+  gap: 12px;
+}
+
+.brand-font {
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.brand-font-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.brand-font-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.brand-font-sample {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .brand-logos,
+  .brand-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-logo-tile {
+    min-height: 160px;
+    padding: 32px;
+  }
+
+  .brand-logo-tile img {
+    max-height: 110px;
+  }
+}
+
+.flow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.flow-step {
+  width: min(100%, 220px);
+  margin: 0;
+  text-align: center;
+}
+
+.flow-step-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.flow-step figcaption {
+  margin-top: 8px;
+  font-size: 0.85rem;
+}
+
+.flow-arrow {
+  font-size: 1.6rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+@media (max-width: 767px) {
+  .flow-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+    line-height: 1;
+  }
+}
+
+.embed-section .container {
+  background: var(--accent);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+.embed-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.embed-section h2 {
+  color: #ffffff;
+}
+
+.embed-section p {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.embed-box {
+  margin-top: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  aspect-ratio: 16 / 9;
+}
+
+.embed-box iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.embed-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+}
+
+.embed-cta {
+  margin-top: 20px;
+  background: #ffffff;
+  color: var(--text);
+}
+
+.embed-section .note-box {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.checklist-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.check-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.check-mark {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #1f8a4c;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.check-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.check-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.check-card .check-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.check-card .check-body {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .checklist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.info-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.info-card h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.info-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.arch-card {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px;
+  background: rgba(37, 99, 235, 0.04);
+}
+
+.arch-label {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2352d6;
+}
+
+.arch-title {
+  margin: 0 0 10px;
+  font-size: 1.3rem;
+}
+
+.arch-subtitle {
+  margin: 0;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.arch-diagram {
+  position: relative;
+  min-height: 550px;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.arch-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.arch-lines line {
+  stroke: rgba(35, 82, 214, 0.35);
+  stroke-width: 0.4;
+}
+
+.arch-node {
+  grid-row: 1;
+  align-self: start;
+  width: min(100%, 260px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(24, 24, 24, 0.06);
+  z-index: 1;
+}
+
+.arch-node h4 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.arch-node p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.arch-node-tl {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+}
+
+.arch-node-tr {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.arch-node-bl {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  justify-self: start;
+}
+
+.arch-node-br {
+  grid-column: 3;
+  grid-row: 3;
+  align-self: end;
+  justify-self: end;
+}
+
+.arch-center {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+  padding: 12px;
+  z-index: 1;
+}
+
+.arch-center strong {
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.arch-center span {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.arch-journey {
+  margin: 24px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(31, 138, 76, 0.25);
+  background: rgba(31, 138, 76, 0.06);
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  color: #1f8a4c;
+}
+
+.arch-journey-arrow {
+  color: rgba(31, 138, 76, 0.6);
+}
+
+@media (max-width: 767px) {
+  .arch-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .arch-lines {
+    display: none;
+  }
+
+  .arch-node,
+  .arch-center {
+    width: 100%;
+    justify-self: stretch;
+  }
+
+  .arch-center {
+    height: auto;
+    border-radius: 16px;
+    padding: 18px;
+  }
+}
 
 </style>
 
