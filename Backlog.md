@@ -34,4 +34,9 @@ Conteúdo a confirmar:
 
 Técnico:
 
+- [x] **Assistente (/chat):** detecção de idioma trata `" a "`, `" e "`, `" o "` como português, então perguntas em inglês ("show me a complex project") viram `pt`. O link de projeto injetado em `sanitizeResponse` sai sempre em inglês ("View X").
+- [x] **Assistente (/chat):** DUX, Pet Mimo, Blam, Gerador de Simulados e Simplify ganharam `url` em `assistantKnowledge.ts`; os cards do `chat.astro` agora vêm de `src/data/projects.ts` (os 9 cases).
+- [ ] **Assistente (/chat):** decidir se algum case novo vira `featured` no `assistantKnowledge.ts` (hoje só World Bank, Comgás, Canguru e Doutor Já).
+- [ ] **Assistente (/chat):** rate limit em memória não funciona no Vercel (cada instância tem seu contador, zera no cold start). Definir limite de gasto no painel da OpenAI; se precisar de limite real, usar Upstash/Vercel KV.
+- [ ] **Assistente (/chat):** sem histórico de conversa (perguntas de acompanhamento não funcionam); pergunta vai em minúsculas para o modelo; `max_output_tokens: 450` inclui raciocínio em modelos GPT-5 (resposta pode vir vazia → fallback silencioso); regras de comportamento duplicadas entre `assistantInstructions` e `assistantKnowledge.assistant.behaviorRules`; `href` vindo do modelo não é validado (permitir só caminhos internos, `mailto:` e LinkedIn).
 - [ ] **Gerador de Simulados (app, não o portfólio):** corrigir a falha de segurança da API (aceita `userId` sem verificar o token) antes de qualquer lançamento.
