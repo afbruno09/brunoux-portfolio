@@ -4,6 +4,8 @@ export type Project = {
   category: string;
   summary: string;
   image: string;
+  /** Small 240x180 crop for compact cards, e.g. in the chat. */
+  thumbnail: string;
   featured: boolean;
 };
 
@@ -15,6 +17,7 @@ export const projects: Project[] = [
     summary:
       "Integrated prototype connecting occupations, courses and labor data.",
     image: "/images/projects/world-bank/cover.png",
+    thumbnail: "/images/projects/world-bank/thumb.webp",
     featured: true,
   },
   {
@@ -24,6 +27,7 @@ export const projects: Project[] = [
     summary:
       "Product design for field operation and risk analysis workflows across mobile and web.",
     image: "/images/projects/comgas/cover.jpg",
+    thumbnail: "/images/projects/comgas/thumb.webp",
     featured: true,
   },
   {
@@ -33,6 +37,7 @@ export const projects: Project[] = [
     summary:
       "Mobile experience designed to support pregnancy care with clear and accessible interactions.",
     image: "/images/projects/canguru/cover.jpg",
+    thumbnail: "/images/projects/canguru/thumb.webp",
     featured: true,
   },
   {
@@ -42,6 +47,7 @@ export const projects: Project[] = [
     summary:
       "Leading design at a Web3 startup: product map, research with players and brands, site and wallet.",
     image: "/images/projects/dux/cover-real.jpg",
+    thumbnail: "/images/projects/dux/thumb.webp",
     featured: false,
   },
   {
@@ -51,6 +57,7 @@ export const projects: Project[] = [
     summary:
       "Taking my sister's pet store online, solo: brand, a Figma component library and a WooCommerce store.",
     image: "/images/projects/pet-mimo/cover-real.jpg",
+    thumbnail: "/images/projects/pet-mimo/thumb.webp",
     featured: false,
   },
   {
@@ -60,6 +67,7 @@ export const projects: Project[] = [
     summary:
       "Field research and a redesigned booking flow that reframed an appointment app toward an employer-sponsored health benefit.",
     image: "/images/projects/doutor-ja/hero-real-opt.jpg",
+    thumbnail: "/images/projects/doutor-ja/thumb.webp",
     featured: true,
   },
   {
@@ -69,6 +77,7 @@ export const projects: Project[] = [
     summary:
       "A WooCommerce store for a high-end 18k gold jewelry brand, built solo in three to four months and still live.",
     image: "/images/projects/blam/cover-real.jpg",
+    thumbnail: "/images/projects/blam/thumb.webp",
     featured: false,
   },
   {
@@ -78,6 +87,7 @@ export const projects: Project[] = [
     summary:
       "An AI practice-exam generator for medical residency, designed and built solo to learn APIs, databases, Google login and payments.",
     image: "/images/projects/gerador-de-simulados/cover-real.jpg",
+    thumbnail: "/images/projects/gerador-de-simulados/thumb.webp",
     featured: false,
   },
   {
@@ -87,6 +97,7 @@ export const projects: Project[] = [
     summary:
       "A Wi-Fi login that swaps the password for a quiz. Third place at Startup Weekend, as the team's only designer.",
     image: "/images/projects/simplify/cover-real.jpg",
+    thumbnail: "/images/projects/simplify/thumb.webp",
     featured: false,
   },
 ];

@@ -1,5 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+
+const projectPreviews = Object.fromEntries(
+  projects.map(({ slug, title, category, thumbnail }) => [
+    `/work/${slug}`,
+    { title, category, image: thumbnail },
+  ])
+);
+
+const chatNavigationLinks = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/#projects" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
 ---
 
 <BaseLayout
@@ -11,28 +26,64 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container header-inner">
       <a href="/" class="site-logo">Bruno Amorim</a>
 
-      <nav class="desktop-nav" aria-label="Chat page navigation">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/#projects">Projects</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="header-actions">
+        <nav class="desktop-nav" aria-label="Chat page navigation">
+          <ul>
+            {chatNavigationLinks.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <div class="language-switch" role="group" aria-label="Language" data-language-switch>
+          <button
+            type="button"
+            data-language-option="en"
+            aria-pressed="true"
+            aria-label="English"
+            lang="en"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            data-language-option="pt"
+            aria-pressed="false"
+            aria-label="Português"
+            lang="pt-BR"
+          >
+            PT
+          </button>
+        </div>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Open menu"
+        >
+          <span class="menu-toggle-line"></span>
+          <span class="menu-toggle-line"></span>
+        </button>
+      </div>
     </div>
+
+    <nav id="mobile-menu" class="mobile-nav" aria-label="Mobile navigation" hidden>
+      <div class="container">
+        <div class="mobile-nav-panel">
+          <ul>
+            {chatNavigationLinks.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </nav>
   </header>
 
-  <button
-    class="language-toggle"
-    type="button"
-    data-language-toggle
-    aria-label="Ver chat em português"
-  >
-    Português
-  </button>
-
   <main>
-    <section class="hero section chat-page-hero">
+    <section class="hero section chat-page-hero" data-chat-page>
       <div class="container hero-inner">
         <div class="hero-content">
           <p class="hero-name" data-i18n="hero.kicker">AI portfolio guide</p>
@@ -40,7 +91,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <div
             class="hero-orb"
             data-hero-orb
-            aria-label="Animated portfolio assistant"
+            aria-hidden="true"
           >
             <div class="hero-orb-glow" aria-hidden="true"></div>
             <div class="hero-media">
@@ -49,7 +100,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 background="transparent"
                 speed="1"
                 loop
-                autoplay
+                data-hero-orb-player
               ></dotlottie-player>
             </div>
           </div>
@@ -60,6 +111,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </p>
 
           <div class="hero-chat">
+            <button
+              class="hero-chat-reset"
+              type="button"
+              data-chat-reset
+              data-i18n="chat.reset"
+              hidden
+            >
+              New conversation
+            </button>
+
             <div
               class="hero-chat-history"
               data-hero-chat-history
@@ -67,65 +128,69 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             >
             </div>
 
-            <form class="hero-chat-form" data-hero-chat-form>
-              <label class="visually-hidden" for="hero-chat-input">
-                Ask about Bruno's work and experiences
-              </label>
-              <input
-                id="hero-chat-input"
-                name="question"
-                type="text"
-                placeholder="Ask about Bruno's work"
-                data-i18n-placeholder="chat.placeholder"
-                autocomplete="off"
-              />
-              <button
-                class="button button-primary"
-                type="submit"
-                data-chat-submit
-                data-i18n="chat.ask"
-              >
-                Ask
-              </button>
-            </form>
+            <div class="hero-chat-composer">
+              <form class="hero-chat-form" data-hero-chat-form>
+                <label class="visually-hidden" for="hero-chat-input">
+                  Ask about Bruno's work and experiences
+                </label>
+                <input
+                  id="hero-chat-input"
+                  name="question"
+                  type="text"
+                  placeholder="Ask about Bruno's work"
+                  data-i18n-placeholder="chat.placeholder"
+                  autocomplete="off"
+                  maxlength="1000"
+                  enterkeyhint="send"
+                />
+                <button
+                  class="button button-primary"
+                  type="submit"
+                  data-chat-submit
+                  data-i18n="chat.ask"
+                >
+                  Ask
+                </button>
+              </form>
 
-            <div class="hero-chat-suggestions" aria-label="Suggested questions">
-              <button
-                type="button"
-                data-chat-suggestion="Which project best shows UX strategy?"
-                data-chat-suggestion-en="Which project best shows UX strategy?"
-                data-chat-suggestion-pt="Qual projeto mostra melhor UX Strategy?"
-                data-i18n="chat.suggestionStrategy"
-              >
-                UX Strategy
-              </button>
-              <button
-                type="button"
-                data-chat-suggestion="Does Bruno have experience with complex products?"
-                data-chat-suggestion-en="Does Bruno have experience with complex products?"
-                data-chat-suggestion-pt="Bruno tem experiência com produtos complexos?"
-                data-i18n="chat.suggestionComplex"
-              >
-                Complex products
-              </button>
-              <button
-                type="button"
-                data-chat-suggestion="Why hire Bruno?"
-                data-chat-suggestion-en="Why hire Bruno?"
-                data-chat-suggestion-pt="Por que contratar o Bruno?"
-                data-i18n="chat.suggestionHire"
-              >
-                Why hire Bruno?
-              </button>
-              <button
-                type="button"
-                data-chat-suggestion="Show me a case with impact"
-                data-chat-suggestion-en="Show me a case with impact"
-                data-chat-suggestion-pt="Mostre um case com impacto"
-                data-i18n="chat.suggestionImpact"
-              >
-                Impact case
-              </button>
+              <div class="hero-chat-suggestions" aria-label="Suggested questions">
+                <button
+                  type="button"
+                  data-chat-suggestion="Which project best shows UX strategy?"
+                  data-chat-suggestion-en="Which project best shows UX strategy?"
+                  data-chat-suggestion-pt="Qual projeto mostra melhor UX Strategy?"
+                  data-i18n="chat.suggestionStrategy"
+                >
+                  UX Strategy
+                </button>
+                <button
+                  type="button"
+                  data-chat-suggestion="Does Bruno have experience with complex products?"
+                  data-chat-suggestion-en="Does Bruno have experience with complex products?"
+                  data-chat-suggestion-pt="Bruno tem experiência com produtos complexos?"
+                  data-i18n="chat.suggestionComplex"
+                >
+                  Complex products
+                </button>
+                <button
+                  type="button"
+                  data-chat-suggestion="Why hire Bruno?"
+                  data-chat-suggestion-en="Why hire Bruno?"
+                  data-chat-suggestion-pt="Por que contratar o Bruno?"
+                  data-i18n="chat.suggestionHire"
+                >
+                  Why hire Bruno?
+                </button>
+                <button
+                  type="button"
+                  data-chat-suggestion="Show me a case with impact"
+                  data-chat-suggestion-en="Show me a case with impact"
+                  data-chat-suggestion-pt="Mostre um case com impacto"
+                  data-i18n="chat.suggestionImpact"
+                >
+                  Biggest impact
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -133,12 +198,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </section>
   </main>
 
-  <script
-    src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
-    type="module"
-  ></script>
+  <script>
+    import "@dotlottie/player-component";
+  </script>
 
-  <script is:inline>
+  <script is:inline define:vars={{ projectPreviews }}>
     const heroChatForm = document.querySelector("[data-hero-chat-form]");
     const heroChatInput = document.querySelector("#hero-chat-input");
     const heroChatHistory = document.querySelector("[data-hero-chat-history]");
@@ -148,30 +212,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     const heroChatSuggestions = document.querySelectorAll(
       "[data-chat-suggestion]"
     );
-    const languageToggle = document.querySelector("[data-language-toggle]");
+    const languageSwitch = document.querySelector("[data-language-switch]");
+    const languageOptions = document.querySelectorAll("[data-language-option]");
+    const chatPage = document.querySelector("[data-chat-page]");
+    const chatReset = document.querySelector("[data-chat-reset]");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.querySelector("#mobile-menu");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-    const projectPreviews = {
-      "/work/world-bank": {
-        title: "World Bank / Ministry of Labor",
-        category: "Public Employment Platform",
-        image: "/images/projects/world-bank/cover-v3.jpg",
-      },
-      "/work/comgas": {
-        title: "Comgas Field Safety App",
-        category: "Field Operations / Safety Platform",
-        image: "/images/projects/comgas/cover.jpg",
-      },
-      "/work/canguru": {
-        title: "Canguru Pregnancy App",
-        category: "Mobile App / Health",
-        image: "/images/projects/canguru/cover.jpg",
-      },
-      "/work/doutor-ja": {
-        title: "Doutor Já — Carteira Saúde",
-        category: "Healthcare Platform",
-        image: "/images/projects/doutor-ja/hero-real.jpg",
-      },
-    };
+    if (!prefersReducedMotion) {
+      document
+        .querySelector("[data-hero-orb-player]")
+        ?.setAttribute("autoplay", "");
+    }
 
     const translations = {
       en: {
@@ -182,16 +238,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           "Hi, I can help you understand Bruno's projects, experience, and which case best matches what you are looking for.",
         "chat.placeholder": "Ask about Bruno's work",
         "chat.ask": "Ask",
-        "chat.loading": "Looking through Bruno's selected work...",
+        "chat.loading": "Looking through Bruno's work",
         "chat.error":
           "I couldn't answer that right now. Please try again, or contact Bruno directly for more context.",
         "chat.you": "You",
+        "menu.open": "Open menu",
+        "menu.close": "Close menu",
         "chat.suggestionStrategy": "UX Strategy",
         "chat.suggestionComplex": "Complex products",
         "chat.suggestionHire": "Why hire Bruno?",
-        "chat.suggestionImpact": "Impact case",
-        "language.toggle": "Português",
-        "language.label": "Ver chat em português",
+        "chat.suggestionImpact": "Biggest impact",
+        "chat.reset": "New conversation",
+        "chat.emailBruno": "Email Bruno",
+        "chat.viewWork": "View selected work",
+        "language.label": "Language",
       },
       pt: {
         "hero.kicker": "Guia do portfolio com IA",
@@ -199,18 +259,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         "chat.assistantName": "Assistente do Portfolio do Bruno",
         "chat.initial":
           "Oi, eu posso te ajudar a entender os projetos do Bruno, sua experiência e qual case combina melhor com o que você procura.",
-        "chat.placeholder": "Pergunte sobre o trabalho do Bruno",
+        "chat.placeholder": "Faça sua pergunta",
         "chat.ask": "Perguntar",
-        "chat.loading": "Organizando a melhor resposta...",
+        "chat.loading": "Organizando a resposta",
         "chat.error":
           "Não consegui responder agora. Tente novamente ou entre em contato com o Bruno para mais contexto.",
         "chat.you": "Você",
+        "menu.open": "Abrir menu",
+        "menu.close": "Fechar menu",
         "chat.suggestionStrategy": "UX Strategy",
         "chat.suggestionComplex": "Produtos complexos",
         "chat.suggestionHire": "Por que contratar?",
-        "chat.suggestionImpact": "Case com impacto",
-        "language.toggle": "English",
-        "language.label": "View chat in English",
+        "chat.suggestionImpact": "Maior impacto",
+        "chat.reset": "Nova conversa",
+        "chat.emailBruno": "Enviar e-mail ao Bruno",
+        "chat.viewWork": "Ver trabalhos selecionados",
+        "language.label": "Idioma",
       },
     };
 
@@ -223,7 +287,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       return translations[language]?.[key] ?? translations.en[key] ?? key;
     }
 
-    function applyLanguage(language) {
+    function applyLanguage(requestedLanguage) {
+      const language = requestedLanguage === "pt" ? "pt" : "en";
       const dictionary = translations[language] ?? translations.en;
 
       document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
@@ -254,12 +319,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         }
       });
 
-      if (languageToggle) {
-        languageToggle.textContent = dictionary["language.toggle"];
-        languageToggle.setAttribute("aria-label", dictionary["language.label"]);
+      languageOptions.forEach((option) => {
+        option.setAttribute(
+          "aria-pressed",
+          String(option.getAttribute("data-language-option") === language)
+        );
+      });
+
+      if (languageSwitch) {
+        languageSwitch.setAttribute("aria-label", dictionary["language.label"]);
       }
 
       localStorage.setItem("site-language", language);
+      setMenuOpen(isMenuOpen());
     }
 
     function createAssistantShell({ loading = false } = {}) {
@@ -269,8 +341,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const avatar = document.createElement("div");
       avatar.className = "hero-chat-avatar";
       avatar.setAttribute("aria-hidden", "true");
-      avatar.innerHTML =
-        '<dotlottie-player src="/animations/orb.lottie" background="transparent" speed="1" loop autoplay></dotlottie-player>';
+      avatar.innerHTML = `<dotlottie-player src="/animations/orb.lottie" background="transparent" speed="1" loop${
+        prefersReducedMotion ? "" : " autoplay"
+      }></dotlottie-player>`;
+      const player = avatar.querySelector("dotlottie-player");
 
       const response = document.createElement("article");
       response.className = "hero-chat-response";
@@ -286,6 +360,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const answer = document.createElement("p");
       answer.textContent = loading ? translate("chat.loading") : "";
 
+      if (loading) {
+        const typing = document.createElement("span");
+        typing.className = "hero-chat-typing";
+        typing.setAttribute("aria-hidden", "true");
+        typing.append(
+          document.createElement("span"),
+          document.createElement("span"),
+          document.createElement("span")
+        );
+        answer.appendChild(typing);
+      }
+
       const cards = document.createElement("div");
       cards.className = "hero-chat-projects";
 
@@ -295,7 +381,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       response.append(heading, answer, cards, links);
       row.append(avatar, response);
 
-      return { row, response, answer, cards, links };
+      return { row, response, answer, cards, links, player };
     }
 
     function appendUserMessage(question) {
@@ -308,6 +394,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       bubble.className = "hero-chat-user-message";
 
       const heading = document.createElement("strong");
+      heading.className = "visually-hidden";
       heading.textContent = translate("chat.you");
 
       const text = document.createElement("p");
@@ -323,7 +410,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       const shell = createAssistantShell({ loading: true });
       heroChatHistory.appendChild(shell.row);
-      shell.row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      heroChatHistory.setAttribute("aria-busy", "true");
+      shell.row.scrollIntoView({
+        block: "end",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
 
       heroChatSubmit?.setAttribute("disabled", "");
       heroChatSuggestions.forEach((button) => {
@@ -348,6 +439,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         image.src = preview.image;
         image.alt = "";
         image.loading = "lazy";
+        image.decoding = "async";
+        image.width = 80;
+        image.height = 60;
 
         const content = document.createElement("span");
 
@@ -363,14 +457,40 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       });
     }
 
+    // Freeze an answer's avatar once it is done, so only the pending
+    // answer animates instead of one loop per message.
+    function stopAvatar(player) {
+      if (!player) return;
+
+      const pause = () => {
+        try {
+          player.pause?.();
+        } catch {}
+      };
+
+      player.removeAttribute("autoplay");
+      pause();
+      player.addEventListener("ready", pause, { once: true });
+    }
+
     function renderChatAnswer(shell, response) {
       if (!shell) return;
 
       shell.answer.textContent = response.answer;
+
+      if (response.language) {
+        const lang = response.language === "pt" ? "pt-BR" : "en";
+        shell.response.lang = lang;
+        shell.row.previousElementSibling?.setAttribute("lang", lang);
+      }
+      shell.answer.classList.add("hero-chat-answer-in");
       shell.links.replaceChildren();
       renderProjectCards(shell.cards, response.links);
 
+      // A project with a card already has a way in; skip its duplicate pill.
       response.links?.forEach((link) => {
+        if (projectPreviews[link.href]) return;
+
         const element = document.createElement("a");
         element.className = "hero-chat-response-link";
         element.textContent = link.label;
@@ -385,6 +505,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       });
 
       shell.response.classList.remove("hero-chat-response-loading");
+      stopAvatar(shell.player);
+      heroChatHistory?.removeAttribute("aria-busy");
+
+      if (shell.row.isConnected) {
+        (shell.row.previousElementSibling ?? shell.row).scrollIntoView({
+          block: "start",
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+      }
+
       heroChatSubmit?.removeAttribute("disabled");
       heroChatSuggestions.forEach((button) => {
         button.removeAttribute("disabled");
@@ -395,8 +525,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       renderChatAnswer(shell, {
         answer: message || translate("chat.error"),
         links: [
-          { label: "Email Bruno", href: "mailto:contact@brunoux.com" },
-          { label: "View work", href: "/#projects" },
+          { label: translate("chat.emailBruno"), href: "mailto:contact@brunoux.com" },
+          { label: translate("chat.viewWork"), href: "/#projects" },
         ],
       });
     }
@@ -404,6 +534,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     async function showChatAnswer(question) {
       heroOrb?.classList.add("hero-orb-hidden");
       heroChatIntro?.classList.add("hero-chat-intro-hidden");
+      chatPage?.classList.add("is-chatting");
+      if (chatReset) chatReset.hidden = false;
       appendUserMessage(question);
       const shell = setChatLoading();
 
@@ -433,22 +565,63 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     const savedLanguage = localStorage.getItem("site-language") || "en";
     applyLanguage(savedLanguage);
 
-    languageToggle?.addEventListener("click", () => {
-      const currentLanguage =
-        localStorage.getItem("site-language") === "pt" ? "pt" : "en";
-      applyLanguage(currentLanguage === "pt" ? "en" : "pt");
+    languageOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        applyLanguage(option.getAttribute("data-language-option"));
+      });
     });
 
-    window.addEventListener(
-      "scroll",
-      () => {
-        languageToggle?.classList.toggle(
-          "language-toggle-hidden",
-          window.scrollY >= 24
-        );
-      },
-      { passive: true }
-    );
+    function resetConversation() {
+      heroChatHistory?.replaceChildren();
+      heroChatHistory?.removeAttribute("aria-busy");
+      heroOrb?.classList.remove("hero-orb-hidden");
+      heroChatIntro?.classList.remove("hero-chat-intro-hidden");
+      chatPage?.classList.remove("is-chatting");
+      if (chatReset) chatReset.hidden = true;
+      window.scrollTo({ top: 0 });
+      heroChatInput?.focus({ preventScroll: true });
+    }
+
+    chatReset?.addEventListener("click", resetConversation);
+
+    function isMenuOpen() {
+      return menuToggle?.getAttribute("aria-expanded") === "true";
+    }
+
+    function setMenuOpen(isOpen) {
+      if (!menuToggle || !mobileMenu) return;
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute(
+        "aria-label",
+        translate(isOpen ? "menu.close" : "menu.open")
+      );
+      mobileMenu.hidden = !isOpen;
+    }
+
+    menuToggle?.addEventListener("click", () => {
+      setMenuOpen(!isMenuOpen());
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isMenuOpen()) {
+        setMenuOpen(false);
+        menuToggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (
+        isMenuOpen() &&
+        !mobileMenu.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    });
+
+    mobileMenu?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setMenuOpen(false));
+    });
 
     heroChatForm?.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -464,6 +637,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         const question = button.getAttribute("data-chat-suggestion");
         if (!question) return;
         showChatAnswer(question);
+
+        // Keep keyboard and mouse users in the input; on touch this would
+        // pop the keyboard over the answer.
+        if (hasFinePointer) {
+          heroChatInput?.focus({ preventScroll: true });
+        }
       });
     });
   </script>
