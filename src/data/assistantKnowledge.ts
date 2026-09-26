@@ -249,6 +249,7 @@ export const assistantKnowledge = {
       category: "Web3 / Product Design",
       summary:
         "Leading design at a Web3 startup: product map, research with players and brands, site and wallet.",
+      url: "/work/dux",
       featured: false,
       skills: ["Product design", "Digital execution", "Web3 context"],
       evidence: [
@@ -261,6 +262,7 @@ export const assistantKnowledge = {
       category: "E-commerce / UX/UI Design",
       summary:
         "Taking his sister's pet store online, solo: brand, a Figma component library and a WooCommerce store.",
+      url: "/work/pet-mimo",
       featured: false,
       skills: ["UX/UI design", "E-commerce", "Branding"],
       evidence: [
@@ -273,6 +275,7 @@ export const assistantKnowledge = {
       category: "Jewelry Brand",
       summary:
         "A WooCommerce store for a high-end 18k gold jewelry brand, built solo in three to four months and still live.",
+      url: "/work/blam",
       featured: false,
       skills: ["WordPress", "Visual presentation", "Product showcase"],
       evidence: [
@@ -285,6 +288,7 @@ export const assistantKnowledge = {
       category: "AI Product / Independent",
       summary:
         "An AI practice-exam generator for medical residency, designed and built solo to learn APIs, databases, Google login and payments.",
+      url: "/work/gerador-de-simulados",
       featured: false,
       skills: ["AI product design", "Prompt design", "AI-assisted development", "Supabase", "OpenAI API"],
       evidence: [
@@ -297,6 +301,7 @@ export const assistantKnowledge = {
       category: "Branding / Digital Product",
       summary:
         "A Wi-Fi login that swaps the password for a quiz. Third place at Startup Weekend, as the team's only designer.",
+      url: "/work/simplify",
       featured: false,
       skills: ["Visual design", "Branding", "Interface design"],
       evidence: [

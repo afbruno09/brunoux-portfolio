@@ -30,6 +30,7 @@ type ChatResponse = {
   confidence: "high" | "medium" | "low";
   category: ChatCategory;
   source?: "openai" | "fallback";
+  language?: ResponseLanguage;
 };
 
 type ResponseLanguage = "en" | "pt";
@@ -139,73 +140,131 @@ function checkUsage(visitorId: string, message: string) {
   return { allowed: true };
 }
 
+// A failed answer shouldn't block the visitor from asking the same thing again.
+function forgetMessage(visitorId: string, message: string) {
+  usageByVisitor.get(visitorId)?.recentMessages.delete(message);
+}
+
 function includesAny(text: string, terms: string[]) {
   return terms.some((term) => text.includes(term));
 }
 
-function detectQuestionLanguage(question: string): ResponseLanguage {
-  const portugueseSignals = [
-    " a ",
-    " as ",
-    " com ",
-    " da ",
-    " das ",
-    " de ",
-    " do ",
-    " dos ",
-    " e ",
-    " em ",
-    " isso",
-    " nao",
-    " não",
-    " o ",
-    " os ",
-    " para ",
-    " por ",
-    " que ",
-    " sobre ",
-    " um ",
-    " uma ",
-    " voce",
-    " você",
-    "bruno tem",
-    "como",
-    "contato",
-    "curriculo",
-    "currículo",
-    "experiencia",
-    "experiência",
-    "falar",
-    "habilidade",
-    "onde",
-    "pergunta",
-    "pode",
-    "posso",
-    "projeto",
-    "qual",
-    "quais",
-    "quem",
-    "salario",
-    "salário",
-    "trabalho",
-  ];
+// Whole-word match: short Portuguese words like "a", "e", "o", "do" and
+// "as" are also English words, and substrings misfire ("qual" in "quality").
+const portugueseWords = new Set([
+  "com",
+  "da",
+  "das",
+  "de",
+  "dos",
+  "ele",
+  "em",
+  "isso",
+  "nao",
+  "não",
+  "onde",
+  "para",
+  "pode",
+  "por",
+  "posso",
+  "qual",
+  "quais",
+  "que",
+  "quem",
+  "sobre",
+  "tem",
+  "uma",
+  "voce",
+  "você",
+]);
 
-  const paddedQuestion = ` ${question} `;
-  return includesAny(paddedQuestion, portugueseSignals) ? "pt" : "en";
+const portugueseStems = [
+  "contat",
+  "curricul",
+  "currícul",
+  "experiencia",
+  "experiência",
+  "falar",
+  "habilidade",
+  "pergunt",
+  "projeto",
+  "salario",
+  "salário",
+  "trabalh",
+  "trajetori",
+  "trajetóri",
+];
+
+function detectQuestionLanguage(question: string): ResponseLanguage {
+  if (/[ãõç]/.test(question)) {
+    return "pt";
+  }
+
+  const words = question.split(/[^\p{L}]+/u).filter(Boolean);
+  const isPortuguese = words.some(
+    (word) =>
+      portugueseWords.has(word) ||
+      portugueseStems.some((stem) => word.startsWith(stem))
+  );
+
+  return isPortuguese ? "pt" : "en";
+}
+
+function viewProjectLabel(question: string, title: string) {
+  return detectQuestionLanguage(question) === "pt"
+    ? `Ver ${title}`
+    : `View ${title}`;
+}
+
+// Labels for the site's standard destinations, so links match the answer's
+// language no matter what label the model chose.
+const standardLinkLabels: Record<string, Record<ResponseLanguage, string>> = {
+  "/#projects": { en: "View selected work", pt: "Ver trabalhos selecionados" },
+  "/about": { en: "About Bruno", pt: "Sobre o Bruno" },
+  "/files/bruno-amorim-resume.pdf": { en: "Download resume", pt: "Baixar currículo" },
+  "mailto:contact@brunoux.com": { en: "Email Bruno", pt: "Enviar e-mail ao Bruno" },
+  "https://www.linkedin.com/in/bruno-amorimf": { en: "LinkedIn", pt: "LinkedIn" },
+};
+
+function finalizeResponse(question: string, response: ChatResponse): ChatResponse {
+  const language = detectQuestionLanguage(question);
+  const seen = new Set<string>();
+
+  const links = response.links
+    .filter((link) => {
+      if (seen.has(link.href)) return false;
+      seen.add(link.href);
+      return true;
+    })
+    .map((link) => {
+      const standard = standardLinkLabels[link.href];
+      if (standard) return { ...link, label: standard[language] };
+
+      const project = allAssistantProjects.find((item) => item.url === link.href);
+      if (project) return { ...link, label: viewProjectLabel(question, project.title) };
+
+      return link;
+    });
+
+  return { ...response, links, language };
+}
+
+const blockedTopicTerms = [
+  "salary",
+  "salario",
+  "salário",
+  "private",
+  "privado",
+  "personal document",
+  "documento pessoal",
+];
+
+function isBlockedTopic(question: string) {
+  return includesAny(question, blockedTopicTerms);
 }
 
 function pickCategory(question: string): ChatCategory {
-  if (
-    includesAny(question, [
-      "salary",
-      "salario",
-      "salário",
-      "private",
-      "privado",
-      "personal document",
-      "documento pessoal",
-    ])
-  ) {
+  if (isBlockedTopic(question)) {
     return "out_of_scope";
   }
 
@@ -362,14 +421,14 @@ function cleanResponseText(response: ChatResponse): ChatResponse {
 }
 
 function sanitizeResponse(question: string, response: ChatResponse): ChatResponse {
-  const category = pickCategory(question);
-  const project = findProject(question);
-
-  if (category === "out_of_scope") {
+  // Trust the model's category; only hard-block sensitive topics here.
+  if (isBlockedTopic(question)) {
     return cleanResponseText(localizedOutOfScopeResponse(question, response.source));
   }
 
-  if (category === "projects" && project?.url) {
+  const project = findProject(question);
+
+  if (response.category === "projects" && project?.url) {
     const hasProjectLink = response.links.some((link) => link.href === project.url);
 
     return cleanResponseText({
@@ -378,7 +437,7 @@ function sanitizeResponse(question: string, response: ChatResponse): ChatRespons
       links: hasProjectLink
         ? response.links
         : [
-            { label: `View ${project.title}`, href: project.url },
+            { label: viewProjectLabel(question, project.title), href: project.url },
             ...response.links,
           ],
     });
@@ -435,7 +494,10 @@ function buildMockResponse(question: string): ChatResponse {
       answer: `${selectedProject.title} is a strong example of Bruno's work. ${selectedProject.summary} It demonstrates ${selectedProject.skills.slice(0, 3).join(", ")}.`,
       links: selectedProject.url
         ? [
-            { label: `View ${selectedProject.title}`, href: selectedProject.url },
+            {
+              label: viewProjectLabel(question, selectedProject.title),
+              href: selectedProject.url,
+            },
             { label: "View selected work", href: "/#projects" },
           ]
         : preferredLinks("projects"),
@@ -585,7 +647,8 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const usageCheck = checkUsage(getVisitorId(request), normalizedQuestion);
+  const visitorId = getVisitorId(request);
+  const usageCheck = checkUsage(visitorId, normalizedQuestion);
 
   if (!usageCheck.allowed) {
     return new Response(
@@ -600,9 +663,10 @@ export const POST: APIRoute = async ({ request }) => {
       await buildOpenAIResponse(normalizedQuestion)
     );
 
-    return new Response(JSON.stringify(response), {
-      headers: jsonHeaders,
-    });
+    return new Response(
+      JSON.stringify(finalizeResponse(normalizedQuestion, response)),
+      { headers: jsonHeaders }
+    );
   } catch (error) {
     const status =
       typeof error === "object" && error !== null && "status" in error
@@ -610,12 +674,18 @@ export const POST: APIRoute = async ({ request }) => {
         : "unknown";
 
     console.error("Portfolio assistant API error", { status });
+    forgetMessage(visitorId, normalizedQuestion);
 
-    return new Response(JSON.stringify(buildMockResponse(normalizedQuestion)), {
-      headers: {
-        ...jsonHeaders,
-        "x-assistant-fallback": "true",
-      },
-    });
+    return new Response(
+      JSON.stringify(
+        finalizeResponse(normalizedQuestion, buildMockResponse(normalizedQuestion))
+      ),
+      {
+        headers: {
+          ...jsonHeaders,
+          "x-assistant-fallback": "true",
+        },
+      }
+    );
   }
 };
