@@ -180,8 +180,10 @@ export const assistantKnowledge = {
       ],
       evidence: [
         "Designed a mobile-first workflow for field technicians to identify risks, capture photos or videos, and submit structured evidence.",
-        "Designed a web dashboard concept for office teams to review submissions, track documentation, and support decision-making.",
-        "Connected field registration and office review in a clearer end-to-end workflow.",
+        "Designed the web side for office teams to review submissions, track documentation, and support decision-making.",
+        "As the sole designer, created conditional flows for eight high-risk scenarios, with offline completion, evidence capture, contextual data, and supervisor approval, plus the project's Design System.",
+        "Ran several alignment sessions with the Comgás safety area and field supervisors, and combined field research with usability testing.",
+        "The product was developed and delivered, replacing paper-based Risk Analysis and Work Permit procedures.",
       ],
     },
     {
